@@ -33,6 +33,11 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  
+      # エックスサーバーのホストキーをknown_hostsに追加
+      - name: Add XServer to known_hosts
+        run: |
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       # エックスサーバーに rsync でアップロード
       - name: Deploy to XServer
