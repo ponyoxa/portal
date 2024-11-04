@@ -13,6 +13,12 @@ const { data: report } = await useAsyncData(`report-${route.params.slug}`, async
     <h1>{{ report.title }}</h1>
     <ContentRenderer :value="report" />
   </div>
+  <a class="link-to-top" href="/reports">一覧に戻る</a>
 </template>
 
-
+<style>
+.link-to-top {
+  text-align: right;
+  display: block;
+}
+</style>
