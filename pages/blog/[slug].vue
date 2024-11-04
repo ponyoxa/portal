@@ -11,7 +11,6 @@ const { data: article } = await useAsyncData(`blog-article-${route.params.slug}`
 <template>
   <div>
     <h1>{{ article.title }}</h1>
-    <p>{{ article.description }}</p>
     <ContentRenderer :value="article" />
   </div>
 </template>
