@@ -15,4 +15,8 @@ body {
   text-align:left;     
   width:650px;  
 }
+
+p {
+  line-height: 150%;
+}
 </style>
