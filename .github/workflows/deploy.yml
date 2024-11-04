@@ -1,0 +1,50 @@
+name: Deploy to XServer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリのコードをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Node.js のセットアップ
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # 必要に応じてNode.jsのバージョンを変更
+
+      # パッケージのインストール
+      - name: Install dependencies
+        run: npm install
+
+      # Nuxt で静的ファイルを生成
+      - name: Generate static files
+        run: npm run generate
+
+      # SSHエージェントの設定
+      - name: Start SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  
+      # エックスサーバーのホストキーをknown_hostsに追加
+      - name: Add XServer to known_hosts
+        run: |
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # エックスサーバーに rsync でアップロード
+      - name: Deploy to XServer
+        env:
+          RSYNC_USER: ${{ secrets.SSH_USER }}
+          RSYNC_HOST: ${{ secrets.SSH_HOST }}
+          RSYNC_PORT: ${{ secrets.SSH_PORT }}
+          RSYNC_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          rsync -avz --delete -e "ssh -p $RSYNC_PORT" ./dist/ $RSYNC_USER@$RSYNC_HOST:$RSYNC_PATH
