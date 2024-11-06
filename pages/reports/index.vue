@@ -39,14 +39,15 @@ const sortedData = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  padding: 0 16px; /* 左右のパディングを追加してレスポンシブ対応 */
 }
 
 .report-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 1rem;
-  width: 600px; /* カードの幅を調整して中央に配置 */
-  margin: 0 auto;   /* カードを中央揃え */
+  max-width: 600px; /* カードの最大幅を設定 */
+  margin: 0 auto; /* カードを中央に配置 */
   transition: box-shadow 0.2s ease;
 }
 
@@ -67,5 +68,24 @@ const sortedData = computed(() => {
 .link-to-top {
   text-align: right;
   display: block;
+  padding: 1rem;
+}
+
+/* レスポンシブデザイン用のメディアクエリ */
+@media (max-width: 768px) {
+  .report-card {
+    max-width: 100%; /* カード幅を画面幅に合わせる */
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-card {
+    padding: 0.8rem; /* モバイルでのパディング調整 */
+  }
+
+  .link-to-top {
+    text-align: center; /* 小さい画面では中央揃え */
+  }
 }
 </style>
