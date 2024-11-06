@@ -13,7 +13,8 @@ body {
   margin-left:auto;
   margin-right:auto;
   text-align:left;     
-  width:650px;  
+  width:650px;
+  color: #333333;
 }
 
 p {
