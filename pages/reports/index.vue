@@ -47,7 +47,6 @@ const sortedData = computed(() => {
   border-radius: 8px;
   padding: 1rem;
   max-width: 600px; /* カードの最大幅を設定 */
-  margin: 0 auto; /* カードを中央に配置 */
   transition: box-shadow 0.2s ease;
 }
 
