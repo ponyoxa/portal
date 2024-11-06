@@ -24,4 +24,8 @@ body {
     padding: 0 12px; /* モバイルでの左右の余白 */
   }
 }
+
+p {
+  line-height: 150%;
+}
 </style>
