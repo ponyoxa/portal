@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         { hid: 'og:url', property: 'og:url', content: 'https://ponyoxa.com/' },
         { hid: 'og:title', property: 'og:title', content: 'ponyoxa blog' },
         { hid: 'og:description', property: 'og:description', content: 'ponyoxa が運営するブログです' },
-        { hid: 'og:image', property: 'og:image', content: '/blog-ogp-2.png' },
+        { hid: 'og:image', property: 'og:image', content: 'blog-ogp-2.png' },
         { name: 'twitter:card', content: 'summary' }
       ]
     }
