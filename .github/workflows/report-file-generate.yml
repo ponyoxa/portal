@@ -1,4 +1,4 @@
-name: Dispatch and Push
+name: report-file-generate
 
 on:
   workflow_dispatch:

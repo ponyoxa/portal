@@ -1,4 +1,4 @@
-name: Dispatch and Push
+name: blog-file-generate
 
 on:
   workflow_dispatch:
