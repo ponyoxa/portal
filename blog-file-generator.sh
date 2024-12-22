@@ -2,8 +2,9 @@
 
 # 今日の日付を取得 (フォーマット: YYYY-MM-DD)
 today=$(date +%Y-%m-%d)
+timestamp=$(date +%s)
 
-filename="${today}.md"
+filename="${timestamp}.md"
 
 # 出力先ディレクトリのパスを作成
 output_dir="./content/blog"
