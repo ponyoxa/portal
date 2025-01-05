@@ -19,7 +19,7 @@ jobs:
       - name: Generate dynamic branch name
         id: generate_branch
         run: |
-          BRANCH_NAME=$(date +"%y_%m_%d_%H%M%S")
+          BRANCH_NAME=$(date +"%y%m%d%H%M%S")
           echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
 
       - name: Run report-file-generator.sh
