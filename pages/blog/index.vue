@@ -10,7 +10,6 @@
         <NuxtLink :to="`/blog/${article._path.split('/').pop()}`">
           <h2>{{ article.title }}</h2>
         </NuxtLink>
-        <p class="article-description">{{ article.description }}</p>
         <div class="article-meta">
           <small>公開日: {{ new Date(article.createdAt).toLocaleDateString() }}</small><br />
           <small>更新日: {{ new Date(article.updatedAt).toLocaleDateString() }}</small>

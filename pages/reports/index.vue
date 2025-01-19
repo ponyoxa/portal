@@ -10,7 +10,6 @@
         <NuxtLink :to="`/reports/${report._path.split('/').pop()}`">
           <h2>{{ report.title }}</h2>
         </NuxtLink>
-        <p class="report-description">{{ report.description }}</p>
         <div class="report-meta">
           <small>作成日: {{ new Date(report.createdAt).toLocaleDateString() }}</small><br />
           <small>更新日: {{ new Date(report.updatedAt).toLocaleDateString() }}</small>
