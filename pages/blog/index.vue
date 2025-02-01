@@ -11,12 +11,14 @@
           <h2>{{ article.title }}</h2>
         </NuxtLink>
         <div class="article-meta">
-          <small>公開日: {{ new Date(article.createdAt).toLocaleDateString() }}</small><br />
-          <small>更新日: {{ new Date(article.updatedAt).toLocaleDateString() }}</small>
+          <small
+            >公開日:
+            {{ new Date(article.createdAt).toLocaleDateString() }}</small
+          >
         </div>
       </div>
     </div>
-    <br>
+    <br />
     <a class="link-to-top" href="/">トップに戻る</a>
   </div>
 </template>
@@ -29,7 +31,9 @@ const { data } = await useAsyncData('blogData', async () => {
 
 // 日付の新しい順に並び替え
 const sortedData = computed(() => {
-  return data.value?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return data.value?.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 });
 </script>
 <style scoped>

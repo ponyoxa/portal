@@ -2,21 +2,19 @@
   <div>
     <h1>Reports</h1>
     <div v-if="data" class="report-list">
-      <div
-        v-for="report in sortedData"
-        :key="report._path"
-        class="report-card"
-      >
+      <div v-for="report in sortedData" :key="report._path" class="report-card">
         <NuxtLink :to="`/reports/${report._path.split('/').pop()}`">
           <h2>{{ report.title }}</h2>
         </NuxtLink>
         <div class="report-meta">
-          <small>作成日: {{ new Date(report.createdAt).toLocaleDateString() }}</small><br />
-          <small>更新日: {{ new Date(report.updatedAt).toLocaleDateString() }}</small>
+          <small
+            >作成日:
+            {{ new Date(report.createdAt).toLocaleDateString() }}</small
+          ><br />
         </div>
       </div>
     </div>
-    <br>
+    <br />
     <a class="link-to-top" href="/">トップに戻る</a>
   </div>
 </template>
@@ -29,7 +27,9 @@ const { data } = await useAsyncData('reportsData', async () => {
 
 // 日付の新しい順に並び替え
 const sortedData = computed(() => {
-  return data.value?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return data.value?.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 });
 </script>
 
