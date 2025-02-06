@@ -2,6 +2,7 @@
   <div>
     <NuxtPage class="markdown-body" :document="article"/>
   </div>
+  <footer><small>&copy 2025 ponyoxa</small></footer>
 </template>
 
 <script>
@@ -26,6 +27,10 @@ body {
   max-width: 650px;
   padding: 0 16px;
   color: #333333;
+}
+
+footer {
+  text-align: center;
 }
 
 @media (max-width: 768px) {
