@@ -7,14 +7,15 @@
         :key="article._path"
         class="article-card"
       >
+      <small
+            >
+            {{ new Date(article.createdAt).toLocaleDateString() }}</small
+          >
         <NuxtLink :to="`/blog/${article._path.split('/').pop()}`">
           <h2>{{ article.title }}</h2>
         </NuxtLink>
         <div class="article-meta">
-          <small
-            >公開日:
-            {{ new Date(article.createdAt).toLocaleDateString() }}</small
-          >
+          
         </div>
       </div>
     </div>
@@ -38,32 +39,21 @@ const sortedData = computed(() => {
 </script>
 <style scoped>
 .article-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 16px; /* 左右のパディングでレスポンシブ対応 */
+  gap: 1rem;
+  padding: 0 8px; /* 左右のパディングを追加してレスポンシブ対応 */
+}
+
+h2 {
+  font-size: 1rem;
 }
 
 .article-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  max-width: 600px;
   padding: 1rem;
-  transition: box-shadow 0.2s ease;
+  max-width: 600px; /* カードの最大幅を設定 */
 }
 
 .article-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.article-description {
-  color: #666;
-  margin: 0.5rem 0;
-}
-
-.article-meta {
-  font-size: 0.8rem;
-  color: #999;
 }
 
 .link-to-top {
@@ -72,25 +62,21 @@ const sortedData = computed(() => {
   padding: 1rem;
 }
 
-/* レスポンシブスタイル */
+/* レスポンシブデザイン用のメディアクエリ */
 @media (max-width: 768px) {
   .article-card {
-    max-width: 100%; /* 幅を100%にしてカードを画面幅に合わせる */
+    max-width: 100%; /* カード幅を画面幅に合わせる */
     padding: 1rem;
-  }
-
-  h1 {
-    font-size: 1.5rem; /* 見出しのサイズを調整 */
   }
 }
 
 @media (max-width: 480px) {
   .article-card {
-    padding: 0.8rem;
+    padding: 0.8rem; /* モバイルでのパディング調整 */
   }
 
   .link-to-top {
-    text-align: center; /* 小さな画面で中央揃え */
+    text-align: center; /* 小さい画面では中央揃え */
   }
 }
 </style>

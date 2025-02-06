@@ -3,15 +3,12 @@
     <h1>Reports</h1>
     <div v-if="data" class="report-list">
       <div v-for="report in sortedData" :key="report._path" class="report-card">
+        <small>
+          {{ new Date(report.createdAt).toLocaleDateString() }}
+        </small>
         <NuxtLink :to="`/reports/${report._path.split('/').pop()}`">
           <h2>{{ report.title }}</h2>
         </NuxtLink>
-        <div class="report-meta">
-          <small
-            >作成日:
-            {{ new Date(report.createdAt).toLocaleDateString() }}</small
-          ><br />
-        </div>
       </div>
     </div>
     <br />
@@ -35,32 +32,21 @@ const sortedData = computed(() => {
 
 <style scoped>
 .report-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 0 16px; /* 左右のパディングを追加してレスポンシブ対応 */
+  gap: 1rem;
+  padding: 0 8px; /* 左右のパディングを追加してレスポンシブ対応 */
+}
+
+h2 {
+  font-size: 1rem;
 }
 
 .report-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 1rem;
   max-width: 600px; /* カードの最大幅を設定 */
-  transition: box-shadow 0.2s ease;
 }
 
 .report-card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.report-description {
-  color: #666;
-  margin: 0.5rem 0;
-}
-
-.report-meta {
-  font-size: 0.8rem;
-  color: #999;
 }
 
 .link-to-top {

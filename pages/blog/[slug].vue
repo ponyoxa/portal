@@ -28,4 +28,10 @@ const { data: article, error } = await useAsyncData(`blog-article-${route.params
 .link-to-top {
   text-align: right;
   display: block;
-}</style>
+}
+
+li, ul {
+  padding-top: 4px;/*リスト上の余白*/
+  padding-bottom: 4px;/*リスト下の余白*/
+}
+</style>

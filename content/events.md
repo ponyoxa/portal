@@ -2,3 +2,19 @@
 
 - 2025/02/01 BuriKaigi LT 登壇
   - [参加記録](./blog/1738413339)
+
+
+
+<a class="link-to-top" href="/">トップに戻る</a>
+
+<style scoped>
+.link-to-top {
+  text-align: right;
+  display: block;
+}
+li, ul {
+  padding-top: 4px;/*リスト上の余白*/
+  padding-bottom: 4px;/*リスト下の余白*/
+}
+
+</style>
