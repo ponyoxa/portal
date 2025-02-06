@@ -12,9 +12,4 @@
   text-align: right;
   display: block;
 }
-li, ul {
-  padding-top: 4px;/*リスト上の余白*/
-  padding-bottom: 4px;/*リスト下の余白*/
-}
-
 </style>

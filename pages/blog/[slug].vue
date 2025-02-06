@@ -18,7 +18,7 @@ const { data: article, error } = await useAsyncData(`blog-article-${route.params
     </template>
     <template v-else>
       <h1>{{ article.title }}</h1>
-      <ContentRenderer :value="article" />
+      <ContentRenderer :value="article"/>
     </template>
     <a class="link-to-top" href="/blog">一覧に戻る</a>
   </div>
@@ -28,10 +28,5 @@ const { data: article, error } = await useAsyncData(`blog-article-${route.params
 .link-to-top {
   text-align: right;
   display: block;
-}
-
-li, ul {
-  padding-top: 4px;/*リスト上の余白*/
-  padding-bottom: 4px;/*リスト下の余白*/
 }
 </style>

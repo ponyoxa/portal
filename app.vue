@@ -1,12 +1,22 @@
 <template>
   <div>
-    <NuxtPage />
+    <NuxtPage class="markdown-body" :document="article"/>
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      article: {} // Define the article property
+    };
+  }
+};
+</script>
+
 <style>
 html {
-  font-family: "BIZ UDPGothic", sans-serif;
+  font-family: "BIZ UDPGothic", sans-serif !important;
 }
 
 body {
@@ -27,5 +37,9 @@ body {
 
 p {
   line-height: 150%;
+}
+
+body {
+  margin-bottom: 100px;
 }
 </style>

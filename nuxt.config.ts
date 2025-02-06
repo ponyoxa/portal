@@ -9,6 +9,10 @@ export default defineNuxtConfig({
     '/': { prerender: true }
   },
 
+  css: [
+    'github-markdown-css',
+  ],
+
   compatibilityDate: '2024-10-21',
 
   app: {
