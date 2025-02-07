@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   },
 
   css: [
+    './assets/css/font.css',
     'github-markdown-css',
   ],
 
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
         lang: 'ja',
         prefix: 'og: http://ogp.me/ns#'
       },
-      title: 'ponyoxa blog',
+      title: 'ponyoxa portal',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -16,9 +17,6 @@ export default {
 </script>
 
 <style>
-html {
-  font-family: "BIZ UDPGothic", sans-serif !important;
-}
 
 body {
   margin-left: auto;
@@ -27,6 +25,7 @@ body {
   max-width: 650px;
   padding: 0 16px;
   color: #333333;
+  font-family: "BIZ UDPGothic", sans-serif !important;
 }
 
 footer {
