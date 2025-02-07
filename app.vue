@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtPage class="markdown-body" :document="article"/>
+    <NuxtPage class="markdown-body font-class" :document="article"/>
   </div>
   <footer><small>&copy 2025 ponyoxa</small></footer>
 </template>
