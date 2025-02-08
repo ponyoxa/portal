@@ -13,6 +13,11 @@ export default defineNuxtConfig({
     './assets/css/font.css',
     'github-markdown-css',
   ],
+  content: {
+    highlight: {
+      theme: 'github-light'
+    }
+  },
 
   compatibilityDate: '2024-10-21',
 
