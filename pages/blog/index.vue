@@ -12,7 +12,7 @@
             {{ new Date(article.createdAt).toLocaleDateString() }}</small
           >
         <NuxtLink :to="`/blog/${article._path.split('/').pop()}`">
-          <h2>{{ article.title }}</h2>
+          <p>{{ article.title }}</p>
         </NuxtLink>
         <div class="article-meta">
           
@@ -48,12 +48,7 @@ h2 {
 }
 
 .article-card {
-  padding: 1rem;
   max-width: 600px; /* カードの最大幅を設定 */
-}
-
-.article-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .link-to-top {

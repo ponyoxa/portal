@@ -7,7 +7,7 @@
           {{ new Date(report.createdAt).toLocaleDateString() }}
         </small>
         <NuxtLink :to="`/reports/${report._path.split('/').pop()}`">
-          <h2>{{ report.title }}</h2>
+          <p>{{ report.title }}</p>
         </NuxtLink>
       </div>
     </div>
@@ -41,12 +41,7 @@ h2 {
 }
 
 .report-card {
-  padding: 1rem;
   max-width: 600px; /* カードの最大幅を設定 */
-}
-
-.report-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .link-to-top {
