@@ -22,7 +22,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
-  max-width: 650px;
+  max-width: 980px;
   padding: 0 16px;
   color: #333333;
   font-family: "BIZ UDPGothic", sans-serif !important;
