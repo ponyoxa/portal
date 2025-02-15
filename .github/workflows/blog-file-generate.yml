@@ -2,6 +2,11 @@ name: blog-file-generate
 
 on:
   workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue 番号 (例: 123)'
+        required: false
+        default: ''
 
 jobs:
   run-and-commit:
@@ -19,7 +24,12 @@ jobs:
       - name: Generate dynamic branch name
         id: generate_branch
         run: |
-          BRANCH_NAME=$(date +"%y%m%d%H%M%S")
+          # 入力された issue 番号があればブランチ名に含める
+          if [ -z "${{ github.event.inputs.issue_number }}" ]; then
+            BRANCH_NAME=$(date +"%y%m%d%H%M%S")
+          else
+            BRANCH_NAME=issue-${{ github.event.inputs.issue_number }}-$(date +"%y%m%d%H%M%S")
+          fi
           echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
 
       - name: Run blog-file-generator.sh
@@ -31,7 +41,12 @@ jobs:
         run: |
           git checkout -b ${{ env.branch_name }}
           git add .
-          git commit -m "Update generated files"
+          # コミットメッセージも issue 番号が入力されている場合は追加する
+          if [ -z "${{ github.event.inputs.issue_number }}" ]; then
+            git commit -m "Update generated files"
+          else
+            git commit -m "Update generated files for issue #${{ github.event.inputs.issue_number }}"
+          fi
           git push origin HEAD:${{ env.branch_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
