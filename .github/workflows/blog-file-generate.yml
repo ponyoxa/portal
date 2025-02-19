@@ -1,52 +1,52 @@
 name: blog-file-generate
 
 on:
-  workflow_dispatch:
-    inputs:
-      issue_number:
-        description: 'Issue 番号 (例: 123)'
-        required: false
-        default: ''
+    workflow_dispatch:
+        inputs:
+            issue_number:
+                description: "Issue 番号 (例: 123)"
+                required: false
+                default: ""
 
 jobs:
-  run-and-commit:
-    runs-on: ubuntu-latest
+    run-and-commit:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
+            - name: Set up Git
+              run: |
+                  git config --global user.name "GitHub Actions Bot"
+                  git config --global user.email "actions@github.com"
 
-      - name: Generate dynamic branch name
-        id: generate_branch
-        run: |
-          # 入力された issue 番号があればブランチ名に含める
-          if [ -z "${{ github.event.inputs.issue_number }}" ]; then
-            BRANCH_NAME=$(date +"%y%m%d%H%M%S")
-          else
-            BRANCH_NAME=issue-${{ github.event.inputs.issue_number }}-$(date +"%y%m%d%H%M%S")
-          fi
-          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
+            - name: Generate dynamic branch name
+              id: generate_branch
+              run: |
+                  # 入力された issue 番号があればブランチ名に含める
+                  if [ -z "${{ github.event.inputs.issue_number }}" ]; then
+                    BRANCH_NAME=$(date +"%y%m%d%H%M%S")
+                  else
+                    BRANCH_NAME=issue-${{ github.event.inputs.issue_number }}-$(date +"%y%m%d%H%M%S")
+                  fi
+                  echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
 
-      - name: Run blog-file-generator.sh
-        run: |
-          chmod +x ./blog-file-generator.sh
-          ./blog-file-generator.sh
+            - name: Run blog-file-generator.sh
+              run: |
+                  chmod +x ./blog-file-generator.sh
+                  ./blog-file-generator.sh
 
-      - name: Commit and Push Changes
-        run: |
-          git checkout -b ${{ env.branch_name }}
-          git add .
-          # コミットメッセージも issue 番号が入力されている場合は追加する
-          if [ -z "${{ github.event.inputs.issue_number }}" ]; then
-            git commit -m "Update generated files"
-          else
-            git commit -m "Update generated files for issue #${{ github.event.inputs.issue_number }}"
-          fi
-          git push origin HEAD:${{ env.branch_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Commit and Push Changes
+              run: |
+                  git checkout -b ${{ env.branch_name }}
+                  git add .
+                  # コミットメッセージも issue 番号が入力されている場合は追加する
+                  if [ -z "${{ github.event.inputs.issue_number }}" ]; then
+                    git commit -m "Update generated files"
+                  else
+                    git commit -m "Update generated files for issue #${{ github.event.inputs.issue_number }}"
+                  fi
+                  git push origin HEAD:${{ env.branch_name }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
