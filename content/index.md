@@ -6,6 +6,6 @@ TypeScript, Perl, PHP, Java
 
 [ブログ一覧](/blog)
 
-[日報一覧](/reports)
+[日記一覧](/diaries)
 
 [イベント参加歴](/events)
