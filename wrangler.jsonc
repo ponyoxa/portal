@@ -1,0 +1,8 @@
+{
+    "name": "nuxt-content-on-workers",
+    "main": ".output/server/index.mjs",
+    "compatibility_date": "2025-05-15",
+    "assets": {
+        "directory": ".output/public"
+    }
+}
