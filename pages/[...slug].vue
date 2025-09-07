@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <main>
     <ContentDoc>
       <template #not-found>
@@ -7,4 +7,17 @@
       </template>
     </ContentDoc>
   </main>
+</template> -->
+
+<!-- pages/[...slug].vue -->
+<script setup lang="ts">
+const route = useRoute();
+const { data: page } = await useAsyncData(route.path, () =>
+  queryCollection("content").path(route.path).first()
+);
+</script>
+
+<template>
+  <ContentRenderer v-if="page" :value="page" />
+  <div v-else>Not found</div>
 </template>

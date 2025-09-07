@@ -1,40 +1,30 @@
 <template>
   <div>
     <h1>Blog</h1>
-    <div v-if="data" class="article-list">
-      <div
-        v-for="article in sortedData"
-        :key="article._path"
-        class="article-card"
-      >
-      <small
-            >
-            {{ new Date(article.createdAt).toLocaleDateString() }}</small
-          >
-        <NuxtLink :to="`/blog/${article._path.split('/').pop()}`">
-          <p>{{ article.title }}</p>
+    <div v-if="blogs?.length" class="blog-list">
+      <div v-for="post in blogs" :key="post.path" class="blog-card">
+        <small>
+          {{ post.createdAt }}
+        </small>
+        <NuxtLink :to="post.path">
+          <p>{{ post.title ?? "(no title)" }}</p>
         </NuxtLink>
-        <div class="article-meta">
-          
-        </div>
       </div>
     </div>
+
+    <div v-else>記事がありません</div>
     <br />
     <a class="link-to-top" href="/">トップに戻る</a>
   </div>
 </template>
 
 <script setup>
-const { data } = await useAsyncData('blogData', async () => {
-  const content = await queryContent('blog').find();
+const { data: blogs } = await useAsyncData("blog-list", async () => {
+  const content = await queryCollection("blog")
+    .select("path", "title", "createdAt")
+    .order("createdAt", "DESC")
+    .all();
   return content;
-});
-
-// 日付の新しい順に並び替え
-const sortedData = computed(() => {
-  return data.value?.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
 });
 </script>
 <style scoped>
