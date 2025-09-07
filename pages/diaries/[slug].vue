@@ -1,14 +1,16 @@
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 const route = useRoute();
-const { data: diary, error } = await useAsyncData(`diary-${route.params.slug}`, async () => {
-  const diary = await queryContent('diaries', route.params.slug).findOne();
-  if (!diary) {
-    throw new Error('Document not found');
-  }
-  return diary;
-});
+const slug = route.params.slug;
+const { data: diary, error } = await useAsyncData(`diary-${slug}`, () =>
+  queryCollection("diaries").path(`/diaries/${slug}`).first()
+);
+
+if (error.value || !diary.value) {
+  // Nuxtのエラーページを出したいなら 404 を投げる
+  throw createError({ statusCode: 404, statusMessage: "Document not found" });
+}
 </script>
 
 <template>
@@ -18,7 +20,7 @@ const { data: diary, error } = await useAsyncData(`diary-${route.params.slug}`, 
     </template>
     <template v-else>
       <h1>{{ diary.title }}</h1>
-      <ContentRenderer :value="diary"/>
+      <ContentRenderer :value="diary" />
       <a class="link-to-top" href="/diaries">一覧に戻る</a>
     </template>
   </div>

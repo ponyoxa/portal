@@ -1,14 +1,17 @@
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 
 const route = useRoute();
-const { data: article, error } = await useAsyncData(`blog-article-${route.params.slug}`, async () => {
-  const content = await queryContent('blog', route.params.slug).findOne();
-  if (!content) {
-    throw new Error('Document not found');
-  }
-  return content;
-});
+const slug = route.params.slug;
+console.log(slug);
+const { data: article, error } = await useAsyncData(`blog-${slug}`, () =>
+  queryCollection("blog").path(`/blog/${slug}`).first()
+);
+
+if (error.value || !article.value) {
+  // Nuxtのエラーページを出したいなら 404 を投げる
+  throw createError({ statusCode: 404, statusMessage: "Document not found" });
+}
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const { data: article, error } = await useAsyncData(`blog-article-${route.params
     </template>
     <template v-else>
       <h1>{{ article.title }}</h1>
-      <ContentRenderer :value="article"/>
+      <ContentRenderer :value="article" />
     </template>
     <a class="link-to-top" href="/blog">一覧に戻る</a>
   </div>
