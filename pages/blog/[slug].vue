@@ -23,7 +23,7 @@ if (error.value || !article.value) {
       <h1>{{ article.title }}</h1>
       <ContentRenderer :value="article" />
     </template>
-    <a class="link-to-top" href="/blog">一覧に戻る</a>
+    <NuxtLink class="link-to-top" to="/blog" prefetch>一覧に戻る</NuxtLink>
   </div>
 </template>
 

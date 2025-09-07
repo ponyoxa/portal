@@ -6,6 +6,8 @@ export default defineNuxtConfig({
 
   routeRules: {
     "/": { prerender: true },
+    "/blog/**": { prerender: true },
+    "/diaries/**": { prerender: true },
   },
 
   css: ["./assets/css/font.css", "github-markdown-css"],

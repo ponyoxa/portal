@@ -21,7 +21,7 @@ if (error.value || !diary.value) {
     <template v-else>
       <h1>{{ diary.title }}</h1>
       <ContentRenderer :value="diary" />
-      <a class="link-to-top" href="/diaries">一覧に戻る</a>
+      <NuxtLink class="link-to-top" to="/diaries" prefetch>一覧に戻る</NuxtLink>
     </template>
   </div>
 </template>
