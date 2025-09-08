@@ -1,21 +1,21 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "nuxt build",
-        "dev": "nuxt dev",
-        "generate": "nuxt generate",
-        "preview": "nuxt preview"
-    },
-    "dependencies": {
-        "@nuxt/content": "^3.6.3",
-        "better-sqlite3": "^12.2.0",
-        "github-markdown-css": "^5.8.1",
-        "nuxt": "^3.13.2",
-        "nuxt-og-image": "^5.1.9",
-        "unstorage": "^1.17.1"
-    },
-    "devDependencies": {
-        "fast-glob": "^3.3.3"
-    }
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@nuxt/content": "^3.6.0",
+    "better-sqlite3": "^12.2.0",
+    "github-markdown-css": "^5.8.1",
+    "nuxt": "^3.13.2",
+    "nuxt-og-image": "^5.1.9",
+    "unstorage": "^1.17.1"
+  },
+  "devDependencies": {
+    "fast-glob": "^3.3.3"
+  }
 }

@@ -22,6 +22,18 @@ export default defineNuxtConfig({
   modules: ["@nuxt/content", "nuxt-og-image"],
   experimental: {
     renderJsonPayloads: true,
+    componentIslands: true,
+  },
+
+  ogImage: {
+    componentDirs: ["OgImage"],
+    fonts: ["BIZ+UDPGothic:400", "BIZ+UDPGothic:700"],
+  },
+
+  site: {
+    name: "ponyoxa portal",
+    url: "https://ponyoxa.com",
+    description: "ponyoxaのポータルサイト",
   },
 
   routeRules: {

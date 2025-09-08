@@ -13,7 +13,7 @@ const props = defineProps<{ title: string; date?: string }>();
 const formattedDate = computed(() => {
   if (!props.date) return "";
   const d = new Date(props.date);
-  return Number.isNaN(d.getTime()) ? "" : d.toLocaleDateString();
+  return Number.isNaN(d.getTime()) ? "" : d.toLocaleDateString("ja-JP");
 });
 
 import type { CSSProperties } from "vue";
@@ -27,8 +27,10 @@ const root: CSSProperties = {
   padding: "80px",
   background: "#111",
   color: "#fff",
+  font: "'BIZ+UDPGothic', sans-serif",
 };
 const titleStyle: CSSProperties = {
+  font: "BIZ+UDPGothic",
   fontSize: "64px",
   fontWeight: 800,
   lineHeight: 1.2,

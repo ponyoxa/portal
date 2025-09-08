@@ -14,7 +14,6 @@ if (error.value || !article.value) {
 }
 
 if (article.value) {
-  console.log("article value", article.value);
   // タイトルと createdAt から OGP を自動生成
   defineOgImageComponent("ArticleOg", {
     title: article.value.title ?? "",
