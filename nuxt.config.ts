@@ -6,7 +6,9 @@ export default defineNuxtConfig({
 
   routeRules: {
     "/": { prerender: true },
+    '/blog': { prerender: true },
     "/blog/**": { prerender: true },
+    '/diaries': { prerender: true },
     "/diaries/**": { prerender: true },
   },
 
