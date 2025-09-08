@@ -1,8 +1,7 @@
 {
-    "name": "ponyoxa-portal-site",
-    "main": ".output/server/index.mjs",
-    "compatibility_date": "2025-05-15",
-    "assets": {
-        "directory": ".output/public"
-    }
+  "name": "ponyoxa-portal-site",
+  "compatibility_date": "2025-05-15",
+  "assets": {
+    "directory": ".output/public",
+  },
 }
