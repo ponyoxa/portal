@@ -19,7 +19,7 @@ const diaryRoutes = mdToRoutes(["content/diaries/**/*.md"]);
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/content"],
+  modules: ["@nuxt/content", "nuxt-og-image"],
   experimental: {
     renderJsonPayloads: true,
   },
@@ -66,38 +66,6 @@ export default defineNuxtConfig({
           name: "viewport",
           content: "width=device-width, initial-scale=1",
         },
-        {
-          hid: "description",
-          name: "description",
-          content: "ponyoxa が運営するブログです",
-        },
-        {
-          hid: "og:site_name",
-          property: "og:site_name",
-          content: "ponyoxa blog",
-        },
-        { hid: "og:type", property: "og:type", content: "website" },
-        {
-          hid: "og:url",
-          property: "og:url",
-          content: "https://ponyoxa.com/",
-        },
-        {
-          hid: "og:title",
-          property: "og:title",
-          content: "ponyoxa blog",
-        },
-        {
-          hid: "og:description",
-          property: "og:description",
-          content: "ponyoxa が運営するブログです",
-        },
-        {
-          hid: "og:image",
-          property: "og:image",
-          content: "blog-ogp-2.png",
-        },
-        { name: "twitter:card", content: "summary" },
       ],
     },
   },

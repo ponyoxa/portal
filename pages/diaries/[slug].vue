@@ -11,6 +11,18 @@ if (error.value || !diary.value) {
   // Nuxtのエラーページを出したいなら 404 を投げる
   throw createError({ statusCode: 404, statusMessage: "Document not found" });
 }
+if (diary.value) {
+  // タイトルと createdAt から OGP を自動生成
+  defineOgImageComponent("ArticleOg", {
+    title: diary.value.title ?? "",
+    date: diary.value.createdAt,
+  });
+  // 他のOG系メタもついでに
+  useSeoMeta({
+    ogTitle: diary.value.title,
+    ogDescription: diary.value.description,
+  });
+}
 </script>
 
 <template>
