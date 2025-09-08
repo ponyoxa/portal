@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     "/blog/**": { prerender: true },
     "/diaries": { prerender: true },
     "/diaries/**": { prerender: true },
+    "/__og-image__/**": { prerender: false },
   },
 
   css: ["./assets/css/font.css", "github-markdown-css"],
