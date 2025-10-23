@@ -55,7 +55,7 @@ export default defineNuxtConfig({
   },
 
   css: ["./assets/css/font.css", "github-markdown-css"],
-  content: {},
+  content: { experimental: { nativeSqlite: true } },
 
   compatibilityDate: "2025-05-15",
 
