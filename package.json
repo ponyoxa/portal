@@ -6,7 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "deploy": "nuxt generate && wrangler deploy"
+    "deploy": "nuxt generate && cp ./index.mjs /dist/index.mjs && wrangler deploy"
   },
   "dependencies": {
     "@nuxt/content": "^3.6.0",

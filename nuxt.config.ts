@@ -61,7 +61,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "cloudflare_module",
-    cloudflare: {},
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+    },
     prerender: {
       routes: ["/blog", "/diaries", ...blogRoutes, ...diaryRoutes],
       crawlLinks: true,

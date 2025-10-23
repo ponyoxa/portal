@@ -1,7 +1,7 @@
 {
   "name": "ponyoxa-portal-site",
   "compatibility_date": "2025-05-15",
-  "main": "worker.ts",
+  "main": "./server/index.ts",
   "assets": {
     "directory": ".output/public"
   }
