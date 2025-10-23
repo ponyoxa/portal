@@ -13,10 +13,13 @@ if (error.value || !diary.value) {
 }
 if (diary.value) {
   // タイトルと createdAt から OGP を自動生成
-  defineOgImageComponent("ArticleOg", {
-    title: diary.value.title ?? "",
-    date: diary.value.createdAt,
-  });
+  // defineOgImageComponent("NuxtSeo", {
+  //   title: diary.value.title ?? "",
+  //   date: diary.value.createdAt,
+  // });
+  // if (diary.value.ogImage) {
+  //   defineOgImage(page.value.ogImage);
+  // }
   // 他のOG系メタもついでに
   useSeoMeta({
     ogTitle: diary.value.title,

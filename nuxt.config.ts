@@ -25,10 +25,19 @@ export default defineNuxtConfig({
     componentIslands: true,
   },
 
-  ogImage: {
-    componentDirs: ["OgImage"],
-    fonts: ["BIZ+UDPGothic:400", "BIZ+UDPGothic:700"],
-  },
+  // ogImage: {
+  //   componentDirs: ["OgImage"],
+  //   fonts: [
+  //     {
+  //       name: "BIZ UDPGothic",
+  //       path: "font/BIZUDPGothic-Regular.ttf",
+  //     },
+  //     {
+  //       name: "BIZ UDPGothic",
+  //       path: "font/BIZUDPGothic-Bold.ttf",
+  //     },
+  //   ],
+  // },
 
   site: {
     name: "ponyoxa portal",
@@ -42,7 +51,7 @@ export default defineNuxtConfig({
     "/blog/**": { prerender: true },
     "/diaries": { prerender: true },
     "/diaries/**": { prerender: true },
-    "/__og-image__/**": { prerender: false },
+    // "/__og-image__/**": { prerender: false },
   },
 
   css: ["./assets/css/font.css", "github-markdown-css"],

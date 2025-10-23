@@ -15,10 +15,12 @@ if (error.value || !article.value) {
 
 if (article.value) {
   // タイトルと createdAt から OGP を自動生成
-  defineOgImageComponent("ArticleOg", {
-    title: article.value.title ?? "",
-    date: article.value.createdAt,
-  });
+  // defineOgImageComponent("NuxtSeo", {
+  //   title: article.value.title ?? "",
+  //   description: article.value.description ?? "",
+  //   theme: "light",
+  //   // date: article.value.createdAt,
+  // });
   // 他のOG系メタもついでに
   useSeoMeta({
     ogTitle: article.value.title,

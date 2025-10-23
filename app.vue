@@ -1,23 +1,21 @@
 <template>
   <div>
-    <NuxtPage class="markdown-body font-class" :document="article"/>
+    <NuxtPage class="markdown-body font-class" :document="article" />
   </div>
   <footer><small>&copy 2025 ponyoxa</small></footer>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      article: {} // Define the article property
+      article: {}, // Define the article property
     };
-  }
+  },
 };
 </script>
 
 <style>
-
 body {
   margin-left: auto;
   margin-right: auto;
@@ -25,7 +23,7 @@ body {
   max-width: 980px;
   padding: 0 16px;
   color: #333333;
-  font-family: "BIZ UDPGothic", sans-serif !important;
+  /* font-family: "BIZ UDPGothic", sans-serif !important; */
 }
 
 footer {
