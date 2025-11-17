@@ -36,60 +36,163 @@ const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト
   @import 'github-markdown-css';
 
   body {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    max-width: 980px;
-    padding: 0 16px;
+    margin: 0;
+    padding: 0;
     color: #333333;
-    margin-bottom: 100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .markdown-body {
+    flex: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 16px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   footer {
     text-align: center;
+    padding: 2rem 0;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 4rem;
   }
 
-  @media (max-width: 768px) {
-    body {
-      max-width: 100%;
-      padding: 0 12px;
-    }
+  /* ページタイトル */
+  h1 {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
   }
 
+  /* パラグラフ */
   p {
-    line-height: 150%;
+    line-height: 1.8;
   }
 
-  .link-to-top {
-    text-align: right;
-    display: block;
+  /* ナビゲーションリンク・ボタン */
+  .link-to-top,
+  .nav-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 0.9rem;
   }
 
+  .link-to-top:hover,
+  .nav-link:hover {
+    background-color: #f5f5f5;
+    border-color: #999;
+  }
+
+  /* 静的コンテンツページ */
+  .content-page {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .content-page h1 {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-page p {
+    margin: 1rem 0;
+    line-height: 1.8;
+  }
+
+  .content-page a {
+    color: #0066cc;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .content-page a:hover {
+    color: #004499;
+  }
+
+  /* ブログ・日記一覧 */
   .blog-list,
   .article-list {
-    gap: 1rem;
-    padding: 0 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
 
   .blog-card,
   .article-card {
-    max-width: 600px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
   }
 
+  .blog-card:last-child,
+  .article-card:last-child {
+    border-bottom: none;
+  }
+
+  .blog-card small,
+  .article-card small {
+    color: #666;
+    font-size: 0.875rem;
+  }
+
+  .blog-card a,
+  .article-card a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .blog-card a:hover,
+  .article-card a:hover {
+    color: #0066cc;
+  }
+
+  .blog-card p,
+  .article-card p {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  /* レスポンシブ対応 */
   @media (max-width: 768px) {
-    .article-card {
-      max-width: 100%;
-      padding: 1rem;
+    .markdown-body {
+      padding: 0 12px;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      margin-top: 1.5rem;
+    }
+
+    footer {
+      margin-top: 3rem;
     }
   }
 
   @media (max-width: 480px) {
-    .article-card {
-      padding: 0.8rem;
+    h1 {
+      font-size: 1.5rem;
+      margin-top: 1rem;
     }
 
-    .link-to-top {
-      text-align: center;
+    .blog-card p,
+    .article-card p {
+      font-size: 1rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 1.5rem 0;
     }
   }
 </style>

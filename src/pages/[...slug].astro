@@ -19,5 +19,10 @@ const description = entry.data.description || 'ponyoxaのポータルサイト';
 ---
 
 <BaseLayout title={title} description={description}>
-  <Content />
+  <article class="content-page">
+    <Content />
+    <nav style="margin-top: 3rem; text-align: center;">
+      <a class="nav-link" href="/">← ホーム</a>
+    </nav>
+  </article>
 </BaseLayout>

@@ -17,9 +17,11 @@ const description = entry.data.description || '';
 ---
 
 <BaseLayout title={title} description={description}>
-  <div>
+  <article>
     <h1>{entry.data.title}</h1>
     <Content />
-    <a class="link-to-top" href="/blog">一覧に戻る</a>
-  </div>
+    <nav style="margin-top: 3rem; text-align: center;">
+      <a class="nav-link" href="/blog">← 一覧</a>
+    </nav>
+  </article>
 </BaseLayout>
