@@ -1,8 +1,0 @@
-{
-  "name": "ponyoxa-portal-site",
-  "compatibility_date": "2025-05-15",
-  "main": "./server/index.ts",
-  "assets": {
-    "directory": ".output/public"
-  }
-}
