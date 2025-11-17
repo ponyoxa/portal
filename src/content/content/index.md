@@ -1,5 +1,3 @@
-# ponyoxa portal
-
 主にバックエンドエンジニア
 
 TypeScript, Perl, PHP, Java

@@ -1,4 +1,6 @@
 ---
+import Header from '../components/Header.astro';
+
 interface Props {
   title?: string;
   description?: string;
@@ -22,6 +24,7 @@ const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト
   <meta property="og:site_name" content="ponyoxa portal" />
 </head>
 <body>
+  <Header />
   <div class="markdown-body font-class">
     <slot />
   </div>
