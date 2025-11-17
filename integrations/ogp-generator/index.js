@@ -154,7 +154,7 @@ export default function ogpGeneratorIntegration() {
           }
 
           // 5. ビルド成果物にURLマップを出力
-          const urlMapPath = path.join(dir.pathname, 'ogp-urls.json');
+          const urlMapPath = join(dir.pathname, 'ogp-urls.json');
           await writeFile(urlMapPath, JSON.stringify(urlMap, null, 2));
 
           console.log(`\n✅ OGP画像生成完了: ${generated}件生成, ${skipped}件スキップ\n`);
