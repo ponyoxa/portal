@@ -37,15 +37,25 @@ const ogpImageUrl = image?.startsWith('http')
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&display=swap" />
   <title>{title}</title>
   <meta name="description" content={description} />
+
+  <!-- Open Graph / Facebook / Slack -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={Astro.url} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content="https://ponyoxa.com" />
-  <meta property="og:site_name" content="ponyoxa portal" />
-  <meta property="og:type" content="website" />
   <meta property="og:image" content={ogpImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content={title} />
+  <meta property="og:site_name" content="ponyoxa portal" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogpImageUrl} />
+  <meta name="twitter:image:alt" content={title} />
 </head>
 <body>
   <Header />
