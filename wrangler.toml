@@ -1,5 +1,5 @@
-name = "ponyoxa-portal"
-compatibility_date = "2025-05-15"
+name = "ponyoxa-portal-site"
+compatibility_date = "2025-11-17"
 
 pages_build_output_dir = "./dist"
 
