@@ -1,8 +1,97 @@
 import { OGPGenerator } from './generator.js';
 import { R2Uploader } from './uploader.js';
 import { OGPDiffer } from './differ.js';
-import { writeFile } from 'fs/promises';
-import path from 'path';
+import { writeFile, readFile, readdir } from 'fs/promises';
+import { join } from 'path';
+
+/**
+ * フロントマターをパース
+ */
+function parseFrontmatter(content) {
+  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+
+  const frontmatter = {};
+  const lines = match[1].split('\n');
+
+  for (const line of lines) {
+    const [key, ...valueParts] = line.split(':');
+    if (key && valueParts.length > 0) {
+      frontmatter[key.trim()] = valueParts.join(':').trim();
+    }
+  }
+
+  return frontmatter;
+}
+
+/**
+ * マークダウンファイルからコンテンツを取得
+ */
+async function getContentFromFiles() {
+  const allContent = [];
+
+  // ブログ記事
+  try {
+    const blogDir = 'src/content/blog';
+    const blogFiles = await readdir(blogDir);
+
+    for (const file of blogFiles.filter(f => f.endsWith('.md'))) {
+      const content = await readFile(join(blogDir, file), 'utf-8');
+      const frontmatter = parseFrontmatter(content);
+      const slug = file.replace('.md', '');
+
+      allContent.push({
+        pathname: `/blog/${slug}/`,
+        title: frontmatter.title || slug,
+        description: frontmatter.description || '',
+      });
+    }
+  } catch (e) {
+    console.log('⚠️  ブログディレクトリが見つかりません');
+  }
+
+  // 日記
+  try {
+    const diaryDir = 'src/content/diaries';
+    const diaryFiles = await readdir(diaryDir);
+
+    for (const file of diaryFiles.filter(f => f.endsWith('.md'))) {
+      const content = await readFile(join(diaryDir, file), 'utf-8');
+      const frontmatter = parseFrontmatter(content);
+      const slug = file.replace('.md', '');
+
+      allContent.push({
+        pathname: `/diaries/${slug}/`,
+        title: frontmatter.title || slug,
+        description: frontmatter.description || '',
+      });
+    }
+  } catch (e) {
+    console.log('⚠️  日記ディレクトリが見つかりません');
+  }
+
+  // Rootページ
+  try {
+    const rootDir = 'src/content/root';
+    const rootFiles = await readdir(rootDir);
+
+    for (const file of rootFiles.filter(f => f.endsWith('.md'))) {
+      const content = await readFile(join(rootDir, file), 'utf-8');
+      const frontmatter = parseFrontmatter(content);
+      const slug = file.replace('.md', '');
+
+      allContent.push({
+        pathname: slug === 'index' ? '/' : `/${slug}/`,
+        title: frontmatter.title || 'ponyoxa portal',
+        description: frontmatter.description || '',
+      });
+    }
+  } catch (e) {
+    console.log('⚠️  Rootディレクトリが見つかりません');
+  }
+
+  return allContent;
+}
 
 /**
  * OGP画像生成 Astro Integration
@@ -12,8 +101,6 @@ export default function ogpGeneratorIntegration() {
     name: 'ogp-generator',
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
-        // ビルド時に動的にインポート
-        const { getCollection } = await import('astro:content');
         console.log('\n🖼️  OGP画像生成を開始...\n');
 
         // 環境変数チェック
@@ -31,28 +118,8 @@ export default function ogpGeneratorIntegration() {
           const manifest = await uploader.getManifest();
           const differ = new OGPDiffer(manifest);
 
-          // 2. コンテンツコレクションを取得
-          const blogPosts = await getCollection('blog');
-          const diaries = await getCollection('diaries');
-          const rootPages = await getCollection('root');
-
-          const allContent = [
-            ...blogPosts.map(p => ({
-              pathname: `/blog/${p.slug}/`,
-              title: p.data.title,
-              description: p.data.description,
-            })),
-            ...diaries.map(p => ({
-              pathname: `/diaries/${p.slug}/`,
-              title: p.data.title,
-              description: p.data.description,
-            })),
-            ...rootPages.map(p => ({
-              pathname: p.slug === 'index' ? '/' : `/${p.slug}/`,
-              title: p.data.title,
-              description: p.data.description,
-            })),
-          ];
+          // 2. マークダウンファイルから直接コンテンツを取得
+          const allContent = await getContentFromFiles();
 
           let generated = 0;
           let skipped = 0;
