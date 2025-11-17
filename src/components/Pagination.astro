@@ -1,0 +1,91 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+function getPageUrl(page: number): string {
+  if (page === 1) {
+    return baseUrl;
+  }
+  return `${baseUrl}/page/${page}`;
+}
+---
+
+{totalPages > 1 && (
+  <nav class="pagination">
+    {currentPage > 1 && (
+      <a href={getPageUrl(currentPage - 1)} class="pagination-link">
+        ← 前のページ
+      </a>
+    )}
+
+    <div class="pagination-numbers">
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+        page === currentPage ? (
+          <span class="pagination-current">{page}</span>
+        ) : (
+          <a href={getPageUrl(page)} class="pagination-number">
+            {page}
+          </a>
+        )
+      ))}
+    </div>
+
+    {currentPage < totalPages && (
+      <a href={getPageUrl(currentPage + 1)} class="pagination-link">
+        次のページ →
+      </a>
+    )}
+  </nav>
+)}
+
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .pagination-numbers {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .pagination-link,
+  .pagination-number {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s;
+  }
+
+  .pagination-link:hover,
+  .pagination-number:hover {
+    background-color: #f5f5f5;
+  }
+
+  .pagination-current {
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 480px) {
+    .pagination {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

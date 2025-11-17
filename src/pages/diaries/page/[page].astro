@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Pagination from '../../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 20;
+  const diaries = await getCollection('diaries');
+  const sortedDiaries = diaries.sort((a, b) => {
+    const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
+    const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
+    return dateB - dateA;
+  });
+
+  const totalPages = Math.ceil(sortedDiaries.length / PAGE_SIZE);
+
+  return Array.from({ length: totalPages }, (_, i) => i + 1)
+    .filter(page => page > 1) // 1ページ目は /diaries で表示するため除外
+    .map(page => {
+      const start = (page - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      return {
+        params: { page: page.toString() },
+        props: {
+          diaries: sortedDiaries.slice(start, end),
+          currentPage: page,
+          totalPages,
+        },
+      };
+    });
+}
+
+const { diaries, currentPage, totalPages } = Astro.props;
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return date.toISOString().split('T')[0];
+}
+---
+
+<BaseLayout title={`Diaries - Page ${currentPage} - ponyoxa portal`}>
+  <div>
+    <h1>Diaries</h1>
+    {diaries.length > 0 ? (
+      <>
+        <div class="article-list">
+          {diaries.map(post => (
+            <div class="article-card">
+              <small>{formatDate(post.data.createdAt)}</small>
+              <a href={`/diaries/${post.slug}`}>
+                <p>{post.data.title ?? post.slug}</p>
+              </a>
+            </div>
+          ))}
+        </div>
+        <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/diaries" />
+      </>
+    ) : (
+      <div>記事がありません</div>
+    )}
+    <br />
+    <a class="link-to-top" href="/">トップに戻る</a>
+  </div>
+</BaseLayout>

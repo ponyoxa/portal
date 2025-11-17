@@ -1,6 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Pagination from '../../components/Pagination.astro';
+
+const PAGE_SIZE = 20;
 
 const diaries = await getCollection('diaries');
 const sortedDiaries = diaries.sort((a, b) => {
@@ -8,6 +11,10 @@ const sortedDiaries = diaries.sort((a, b) => {
   const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
   return dateB - dateA;
 });
+
+const totalPages = Math.ceil(sortedDiaries.length / PAGE_SIZE);
+const currentPage = 1;
+const paginatedDiaries = sortedDiaries.slice(0, PAGE_SIZE);
 
 function formatDate(date: Date | undefined): string {
   if (!date) return '';
@@ -18,17 +25,20 @@ function formatDate(date: Date | undefined): string {
 <BaseLayout title="Diaries - ponyoxa portal">
   <div>
     <h1>Diaries</h1>
-    {sortedDiaries.length > 0 ? (
-      <div class="article-list">
-        {sortedDiaries.map(post => (
-          <div class="article-card">
-            <small>{formatDate(post.data.createdAt)}</small>
-            <a href={`/diaries/${post.slug}`}>
-              <p>{post.data.title ?? post.slug}</p>
-            </a>
-          </div>
-        ))}
-      </div>
+    {paginatedDiaries.length > 0 ? (
+      <>
+        <div class="article-list">
+          {paginatedDiaries.map(post => (
+            <div class="article-card">
+              <small>{formatDate(post.data.createdAt)}</small>
+              <a href={`/diaries/${post.slug}`}>
+                <p>{post.data.title ?? post.slug}</p>
+              </a>
+            </div>
+          ))}
+        </div>
+        <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/diaries" />
+      </>
     ) : (
       <div>記事がありません</div>
     )}
