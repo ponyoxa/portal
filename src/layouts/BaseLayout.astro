@@ -8,6 +8,24 @@ interface Props {
 }
 
 const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト', image } = Astro.props;
+
+// R2のOGP画像URLを生成
+function getOGPImageUrl(pathname: string): string {
+  const r2PublicUrl = import.meta.env.PUBLIC_R2_URL || 'https://pub-xxx.r2.dev';
+  const normalized = pathname
+    .replace(/^\//, '')
+    .replace(/\/$/, '')
+    .replace(/\//g, '-');
+  const key = `ogp/${normalized || 'index'}.png`;
+  return `${r2PublicUrl}/${key}`;
+}
+
+// 画像URL: propsで指定されていればそれを使用、なければR2から自動生成
+const ogpImageUrl = image?.startsWith('http')
+  ? image
+  : image?.startsWith('/')
+  ? new URL(image, Astro.site || 'https://ponyoxa.com').toString()
+  : getOGPImageUrl(Astro.url.pathname);
 ---
 
 <!DOCTYPE html>
@@ -23,10 +41,11 @@ const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト
   <meta property="og:description" content={description} />
   <meta property="og:url" content="https://ponyoxa.com" />
   <meta property="og:site_name" content="ponyoxa portal" />
-  {image && <meta property="og:image" content={new URL(image, Astro.site || 'https://ponyoxa.com').toString()} />}
-  {image && <meta property="og:image:alt" content={title} />}
-  {image && <meta name="twitter:card" content="summary_large_image" />}
-  {image && <meta name="twitter:image" content={new URL(image, Astro.site || 'https://ponyoxa.com').toString()} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content={ogpImageUrl} />
+  <meta property="og:image:alt" content={title} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={ogpImageUrl} />
 </head>
 <body>
   <Header />

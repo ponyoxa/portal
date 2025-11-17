@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import ogpGenerator from "./integrations/ogp-generator/index.js";
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,4 +10,6 @@ export default defineConfig({
   build: {
     format: "directory", // URL を /blog/post/ の形式に
   },
+
+  integrations: [ogpGenerator()],
 });
