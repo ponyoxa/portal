@@ -1,4 +1,3 @@
-import { getCollection } from 'astro:content';
 import { OGPGenerator } from './generator.js';
 import { R2Uploader } from './uploader.js';
 import { OGPDiffer } from './differ.js';
@@ -13,6 +12,8 @@ export default function ogpGeneratorIntegration() {
     name: 'ogp-generator',
     hooks: {
       'astro:build:done': async ({ dir, pages }) => {
+        // ビルド時に動的にインポート
+        const { getCollection } = await import('astro:content');
         console.log('\n🖼️  OGP画像生成を開始...\n');
 
         // 環境変数チェック
