@@ -6,7 +6,7 @@
     "build": "astro build && pnpm run pagefind",
     "pagefind": "pagefind --site dist",
     "preview": "astro preview",
-    "deploy": "astro build && pnpm run pagefind && wrangler pages deploy ./dist"
+    "deploy": "astro build && pnpm run pagefind && wrangler deploy"
   },
   "dependencies": {
     "astro": "^5.15.8",
