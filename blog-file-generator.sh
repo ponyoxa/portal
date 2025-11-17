@@ -7,7 +7,7 @@ timestamp=$(date +%s)
 filename="${timestamp}.md"
 
 # 出力先ディレクトリのパスを作成
-output_dir="./content/blog"
+output_dir="./src/content/blog"
 
 # ファイルパスの設定
 file_path="${output_dir}/${filename}"

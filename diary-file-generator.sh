@@ -6,7 +6,7 @@ today=$(date +%Y-%m-%d)
 filename="${today}.md"
 
 # 出力先ディレクトリのパスを作成
-output_dir="./content/diaries"
+output_dir="./src/content/diaries"
 
 # ファイルパスの設定
 file_path="${output_dir}/${filename}"
