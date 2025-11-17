@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const title = entry.data.title || 'ponyoxa portal';
+const description = entry.data.description || '';
+---
+
+<BaseLayout title={title} description={description}>
+  <div>
+    <h1>{entry.data.title}</h1>
+    <Content />
+    <a class="link-to-top" href="/blog">一覧に戻る</a>
+  </div>
+</BaseLayout>

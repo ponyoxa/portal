@@ -1,0 +1,15 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const entry = await getEntry('content', 'index');
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await entry.render();
+---
+
+<BaseLayout title="ponyoxa portal">
+  <Content />
+</BaseLayout>

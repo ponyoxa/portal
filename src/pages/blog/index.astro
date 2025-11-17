@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const blogs = await getCollection('blog');
+const sortedBlogs = blogs.sort((a, b) => {
+  const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
+  const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
+  return dateB - dateA;
+});
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return date.toISOString().split('T')[0];
+}
+---
+
+<BaseLayout title="Blog - ponyoxa portal">
+  <div>
+    <h1>Blog</h1>
+    {sortedBlogs.length > 0 ? (
+      <div class="blog-list">
+        {sortedBlogs.map(post => (
+          <div class="blog-card">
+            <small>{formatDate(post.data.createdAt)}</small>
+            <a href={`/blog/${post.slug}`}>
+              <p>{post.data.title ?? "(no title)"}</p>
+            </a>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div>記事がありません</div>
+    )}
+    <br />
+    <a class="link-to-top" href="/">トップに戻る</a>
+  </div>
+</BaseLayout>
