@@ -4,9 +4,10 @@ import Header from '../components/Header.astro';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
-const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト' } = Astro.props;
+const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト', image } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -22,6 +23,10 @@ const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト
   <meta property="og:description" content={description} />
   <meta property="og:url" content="https://ponyoxa.com" />
   <meta property="og:site_name" content="ponyoxa portal" />
+  {image && <meta property="og:image" content={new URL(image, Astro.site || 'https://ponyoxa.com').toString()} />}
+  {image && <meta property="og:image:alt" content={title} />}
+  {image && <meta name="twitter:card" content="summary_large_image" />}
+  {image && <meta name="twitter:image" content={new URL(image, Astro.site || 'https://ponyoxa.com').toString()} />}
 </head>
 <body>
   <Header />
