@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 - ページが見つかりません - ponyoxa portal">
+  <article class="content-page">
+    <div class="error-container">
+      <h1 class="error-code">404</h1>
+      <p class="error-message">ページが見つかりません</p>
+      <p class="error-description">
+        お探しのページは存在しないか、移動または削除された可能性があります。
+      </p>
+      <nav style="margin-top: 3rem; text-align: center;">
+        <a class="nav-link" href="/">← ホーム</a>
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .error-container {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .error-code {
+    font-size: 6rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+    line-height: 1;
+  }
+
+  .error-message {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #666;
+  }
+
+  .error-description {
+    font-size: 1rem;
+    margin: 1rem 0 2rem 0;
+    color: #999;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .error-container {
+      padding: 3rem 1rem;
+    }
+
+    .error-code {
+      font-size: 4rem;
+    }
+
+    .error-message {
+      font-size: 1.25rem;
+    }
+
+    .error-description {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .error-container {
+      padding: 2rem 1rem;
+    }
+
+    .error-code {
+      font-size: 3rem;
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+    }
+  }
+</style>
