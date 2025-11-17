@@ -2,7 +2,7 @@
 import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const entry = await getEntry('content', 'index');
+const entry = await getEntry('root', 'index');
 if (!entry) {
   return Astro.redirect('/404');
 }
