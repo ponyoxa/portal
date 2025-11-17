@@ -1,4 +1,5 @@
 ---
+import Search from './Search.astro';
 ---
 
 <header class="site-header">
@@ -6,6 +7,7 @@
     <h1 class="site-title">
       <a href="/">ponyoxa portal</a>
     </h1>
+    <Search />
     <nav class="header-nav">
       <a href="https://x.com/ponyoxa" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="X (Twitter)">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -102,14 +104,19 @@
   @media (max-width: 480px) {
     .header-container {
       padding: 0.75rem 12px;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .site-title {
       font-size: 1rem;
+      width: 100%;
+      order: 1;
     }
 
     .header-nav {
       gap: 0.5rem;
+      order: 3;
     }
 
     .social-link {
