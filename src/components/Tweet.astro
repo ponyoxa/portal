@@ -1,0 +1,38 @@
+---
+interface Props {
+  id: string;
+  username?: string;
+}
+
+const { id, username } = Astro.props;
+const tweetUrl = username
+  ? `https://x.com/${username}/status/${id}`
+  : `https://x.com/i/status/${id}`;
+---
+
+<div class="tweet-embed" data-tweet-id={id}>
+  <blockquote class="twitter-tweet" data-lang="ja" data-dnt="true">
+    <a href={tweetUrl}>View on X</a>
+  </blockquote>
+</div>
+
+<style>
+  .tweet-embed {
+    margin: 1.5rem auto;
+    max-width: 550px;
+  }
+
+  /* ローディング中のスタイル */
+  .tweet-embed blockquote {
+    border-left: 4px solid #1DA1F2;
+    padding: 1rem;
+    background-color: #f5f8fa;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .tweet-embed blockquote a {
+    color: #1DA1F2;
+    text-decoration: none;
+  }
+</style>

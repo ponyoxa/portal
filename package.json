@@ -9,6 +9,7 @@
     "deploy": "astro build && pnpm run pagefind && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.11",
     "astro": "^5.15.8",
     "github-markdown-css": "^5.8.1",
     "pagefind": "^1.4.0",
