@@ -25,6 +25,9 @@ function formatDate(date: Date | undefined): string {
 <BaseLayout title="Blog - ponyoxa portal">
   <div>
     <h1>Blog</h1>
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <a href="/blog/tags" class="nav-link" style="margin: 0;">タグ一覧を見る</a>
+    </div>
     {paginatedBlogs.length > 0 ? (
       <>
         <div class="blog-list">
@@ -34,6 +37,13 @@ function formatDate(date: Date | undefined): string {
               <a href={`/blog/${post.slug}`}>
                 <p>{post.data.title ?? "(no title)"}</p>
               </a>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map(tag => (
+                    <a href={`/blog/tags/${tag}`} class="tag">{tag}</a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -47,3 +57,27 @@ function formatDate(date: Date | undefined): string {
     </nav>
   </div>
 </BaseLayout>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+  }
+
+  .tag:hover {
+    background-color: #e0e0e0;
+  }
+</style>

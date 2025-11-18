@@ -3,6 +3,7 @@ title: Joshi.ts を立ち上げました
 description: TypeScript の女性コミュニティ立ち上げ
 createdAt: 2024-11-06
 updatedAt: 2024-11-06
+tags: ["コミュニティ", "TypeScript", "Joshi.ts"]
 ---
 
 Joshi.ts という女性コミュニティを立ち上げました。

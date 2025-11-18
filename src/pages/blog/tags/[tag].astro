@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogs = await getCollection('blog');
+
+  // すべてのタグを収集
+  const allTags = new Set<string>();
+  blogs.forEach(post => {
+    post.data.tags?.forEach(tag => allTags.add(tag));
+  });
+
+  // 各タグに対してページを生成
+  return Array.from(allTags).map(tag => {
+    const taggedPosts = blogs
+      .filter(post => post.data.tags?.includes(tag))
+      .sort((a, b) => {
+        const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
+        const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
+        return dateB - dateA;
+      });
+
+    return {
+      params: { tag },
+      props: { tag, posts: taggedPosts },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return date.toISOString().split('T')[0];
+}
+---
+
+<BaseLayout title={`タグ: ${tag} - Blog - ponyoxa portal`}>
+  <div>
+    <h1>
+      タグ: <span class="tag-highlight">{tag}</span>
+    </h1>
+    <p class="tag-info">{posts.length}件の記事</p>
+
+    {posts.length > 0 ? (
+      <div class="blog-list">
+        {posts.map(post => (
+          <div class="blog-card">
+            <small>{formatDate(post.data.createdAt)}</small>
+            <a href={`/blog/${post.slug}`}>
+              <p>{post.data.title ?? "(no title)"}</p>
+            </a>
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="tags">
+                {post.data.tags.map(t => (
+                  <a href={`/blog/tags/${t}`} class="tag">{t}</a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p>このタグの記事はありません</p>
+    )}
+
+    <nav style="margin-top: 3rem; text-align: center; display: flex; gap: 1rem; justify-content: center;">
+      <a class="nav-link" href="/blog/tags">← タグ一覧</a>
+      <a class="nav-link" href="/blog">Blog一覧</a>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-highlight {
+    color: #0066cc;
+    font-weight: bold;
+  }
+
+  .tag-info {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+  }
+
+  .tag:hover {
+    background-color: #e0e0e0;
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const blogs = await getCollection('blog');
+
+// すべてのタグを収集してカウント
+const tagCounts = new Map<string, number>();
+blogs.forEach(post => {
+  post.data.tags?.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+// タグを名前順にソート
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<BaseLayout title="タグ一覧 - Blog - ponyoxa portal">
+  <div>
+    <h1>タグ一覧</h1>
+    {sortedTags.length > 0 ? (
+      <div class="tag-list">
+        {sortedTags.map(([tag, count]) => (
+          <a href={`/blog/tags/${tag}`} class="tag-item">
+            <span class="tag-name">{tag}</span>
+            <span class="tag-count">({count})</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p>タグがありません</p>
+    )}
+    <nav style="margin-top: 3rem; text-align: center;">
+      <a class="nav-link" href="/blog">← Blog一覧</a>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s, transform 0.2s;
+    font-size: 0.9rem;
+  }
+
+  .tag-item:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+  }
+
+  .tag-name {
+    font-weight: 500;
+  }
+
+  .tag-count {
+    color: #666;
+    font-size: 0.85rem;
+  }
+</style>
