@@ -87,6 +87,15 @@ const ogpImageUrl = image?.startsWith('http')
     box-sizing: border-box;
   }
 
+  /* マークダウン内の画像 */
+  .markdown-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+
   footer {
     text-align: center;
     padding: 2rem 0;
