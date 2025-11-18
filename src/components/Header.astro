@@ -5,7 +5,10 @@ import Search from './Search.astro';
 <header class="site-header">
   <div class="header-container">
     <h1 class="site-title">
-      <a href="/">ponyoxa portal</a>
+      <a href="/">
+        <img src="/icon.png" alt="ponyoxa icon" class="site-icon" />
+        <span>ponyoxa portal</span>
+      </a>
     </h1>
     <Search />
     <nav class="header-nav">
@@ -48,6 +51,9 @@ import Search from './Search.astro';
   }
 
   .site-title a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     text-decoration: none;
     color: #333;
     transition: color 0.2s;
@@ -55,6 +61,13 @@ import Search from './Search.astro';
 
   .site-title a:hover {
     color: #0066cc;
+  }
+
+  .site-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    object-fit: cover;
   }
 
   .header-nav {
@@ -95,6 +108,11 @@ import Search from './Search.astro';
       font-size: 1.125rem;
     }
 
+    .site-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
     .social-link {
       width: 36px;
       height: 36px;
@@ -109,9 +127,14 @@ import Search from './Search.astro';
     }
 
     .site-title {
-      font-size: 1rem;
+      font-size: 1.125rem;
       width: 100%;
       order: 1;
+    }
+
+    .site-icon {
+      width: 1.5rem;
+      height: 1.5rem;
     }
 
     .header-nav {
