@@ -97,6 +97,43 @@ const ogpImageUrl = image?.startsWith('http')
     border-radius: 4px;
   }
 
+  /* マークダウン見出しに # 記号を表示 */
+  .markdown-body h1::before {
+    content: "# ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
+  .markdown-body h2::before {
+    content: "## ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
+  .markdown-body h3::before {
+    content: "### ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
+  .markdown-body h4::before {
+    content: "#### ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
+  .markdown-body h5::before {
+    content: "##### ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
+  .markdown-body h6::before {
+    content: "###### ";
+    color: #666;
+    margin-right: 0.5rem;
+  }
+
   footer {
     text-align: center;
     padding: 2rem 0;
