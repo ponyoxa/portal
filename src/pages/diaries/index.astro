@@ -22,7 +22,7 @@ function formatDate(date: Date | undefined): string {
 }
 ---
 
-<BaseLayout title="Diaries - ponyoxa portal">
+<BaseLayout title="Diaries - ponyoxa portal" pagefindIgnore={true}>
   <div>
     <h1>Diaries</h1>
     {paginatedDiaries.length > 0 ? (

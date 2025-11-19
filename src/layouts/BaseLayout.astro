@@ -5,9 +5,10 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  pagefindIgnore?: boolean;
 }
 
-const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト', image } = Astro.props;
+const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト', image, pagefindIgnore = false } = Astro.props;
 
 // R2のOGP画像URLを生成
 function getOGPImageUrl(pathname: string): string {
@@ -60,7 +61,7 @@ const ogpImageUrl = image?.startsWith('http')
 </head>
 <body>
   <Header />
-  <div class="markdown-body font-class" data-pagefind-body>
+  <div class="markdown-body font-class" data-pagefind-body={pagefindIgnore ? undefined : true} data-pagefind-ignore={pagefindIgnore ? true : undefined}>
     <slot />
   </div>
   <footer><small>&copy; 2025 ponyoxa</small></footer>

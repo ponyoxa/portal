@@ -17,7 +17,7 @@ const sortedTags = Array.from(tagCounts.entries())
   .sort((a, b) => a[0].localeCompare(b[0]));
 ---
 
-<BaseLayout title="タグ一覧 - Blog - ponyoxa portal">
+<BaseLayout title="タグ一覧 - Blog - ponyoxa portal" pagefindIgnore={true}>
   <div>
     <h1>タグ一覧</h1>
     {sortedTags.length > 0 ? (
