@@ -5,53 +5,83 @@ interface Props {
 }
 
 const { id, username } = Astro.props;
+
+// Twitter OEmbed API を使用してツイート情報を取得
 const tweetUrl = username
-  ? `https://x.com/${username}/status/${id}`
-  : `https://x.com/i/status/${id}`;
+  ? `https://twitter.com/${username}/status/${id}`
+  : `https://twitter.com/i/status/${id}`;
+
+let html = '';
+let error = false;
+
+try {
+  const oembedUrl = `https://publish.twitter.com/oembed?url=${encodeURIComponent(tweetUrl)}&omit_script=true&lang=ja`;
+  const response = await fetch(oembedUrl);
+
+  if (response.ok) {
+    const data = await response.json();
+    html = data.html;
+  } else {
+    error = true;
+    console.error(`Failed to fetch tweet ${id}: ${response.status}`);
+  }
+} catch (err) {
+  error = true;
+  console.error(`Error fetching tweet ${id}:`, err);
+}
 ---
 
-<div class="tweet-embed" data-tweet-id={id}>
-  <blockquote class="twitter-tweet" data-lang="ja" data-dnt="true" data-theme="light">
-    <a href={tweetUrl}>View on X</a>
-  </blockquote>
-</div>
+{error ? (
+  <div class="tweet-error">
+    <p>ツイートの読み込みに失敗しました</p>
+    <a href={tweetUrl} target="_blank" rel="noopener noreferrer">X で見る</a>
+  </div>
+) : (
+  <div class="tweet-wrapper" set:html={html} />
+)}
 
-<script>
-  // DOMContentLoadedまたはtwttr読み込み完了後にウィジェットをレンダリング
-  function loadTweet() {
-    if (window.twttr && window.twttr.widgets) {
-      window.twttr.widgets.load();
-    } else {
-      // twttrがまだ読み込まれていない場合は少し待つ
-      setTimeout(loadTweet, 100);
-    }
-  }
-
-  // DOMが読み込まれた後に実行
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadTweet);
-  } else {
-    loadTweet();
+<script is:inline>
+  // Twitter ウィジェットスクリプトを読み込む（まだ読み込まれていない場合）
+  if (!window.twttrScriptLoaded) {
+    window.twttrScriptLoaded = true;
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
+  } else if (window.twttr && window.twttr.widgets) {
+    // すでにスクリプトが読み込まれている場合は、ウィジェットを再レンダリング
+    window.twttr.widgets.load();
   }
 </script>
 
 <style>
-  .tweet-embed {
+  .tweet-wrapper {
     margin: 1.5rem auto;
     max-width: 550px;
   }
 
-  /* ローディング中のスタイル */
-  .tweet-embed blockquote {
-    border-left: 4px solid #1DA1F2;
+  .tweet-error {
+    margin: 1.5rem auto;
+    max-width: 550px;
     padding: 1rem;
-    background-color: #f5f8fa;
+    border: 1px solid #e1e8ed;
     border-radius: 8px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f7f9fa;
+    text-align: center;
   }
 
-  .tweet-embed blockquote a {
-    color: #1DA1F2;
+  .tweet-error p {
+    margin: 0 0 0.5rem 0;
+    color: #657786;
+  }
+
+  .tweet-error a {
+    color: #1da1f2;
     text-decoration: none;
+  }
+
+  .tweet-error a:hover {
+    text-decoration: underline;
   }
 </style>
