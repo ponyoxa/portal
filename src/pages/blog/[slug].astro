@@ -18,7 +18,7 @@ const description = entry.data.description || '';
 
 <BaseLayout title={title} description={description}>
   <article>
-    <h1>{entry.data.title}</h1>
+    <h1 data-pagefind-meta="title">{entry.data.title}</h1>
     {entry.data.tags && entry.data.tags.length > 0 && (
       <div class="post-tags">
         {entry.data.tags.map(tag => (
