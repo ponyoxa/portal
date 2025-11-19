@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -14,6 +15,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const title = entry.data.title || 'ponyoxa portal';
 const description = entry.data.description || '';
+const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://ponyoxa.com').toString();
 ---
 
 <BaseLayout title={title} description={description}>
@@ -27,7 +29,8 @@ const description = entry.data.description || '';
       </div>
     )}
     <Content />
-    <nav style="margin-top: 3rem; text-align: center;">
+    <ShareButtons title={title} url={currentUrl} />
+    <nav style="margin-top: 2rem; text-align: center;">
       <a class="nav-link" href="/blog">← 一覧</a>
     </nav>
   </article>
