@@ -3,3 +3,4 @@ compatibility_date = "2025-11-17"
 
 [assets]
 directory = "./dist"
+html_handling = "force-trailing-slash"
