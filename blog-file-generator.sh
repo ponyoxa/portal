@@ -19,6 +19,7 @@ title:
 description: 
 createdAt: $today
 updatedAt: $today
+tags: []
 ---
 EOF
 
