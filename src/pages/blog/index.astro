@@ -5,7 +5,9 @@ import Pagination from '../../components/Pagination.astro';
 
 const PAGE_SIZE = 20;
 
-const blogs = await getCollection('blog');
+const blogs = await getCollection('blog', ({ data }) => {
+  return data.createdAt <= new Date();
+});
 const sortedBlogs = blogs.sort((a, b) => {
   const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
   const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;

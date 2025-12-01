@@ -2,7 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
-const blogs = await getCollection('blog');
+const blogs = await getCollection('blog', ({ data }) => {
+  return data.createdAt <= new Date();
+});
 
 // すべてのタグを収集してカウント
 const tagCounts = new Map<string, number>();
