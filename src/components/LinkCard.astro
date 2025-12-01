@@ -1,0 +1,169 @@
+---
+import { fetchOGP } from '../utils/ogp.js';
+
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+
+// URLが外部リンクかどうかをチェック
+const isExternal = url.startsWith('http://') || url.startsWith('https://');
+
+// 外部リンクの場合はOGP情報を取得
+let title = url;
+let description: string | undefined;
+let image: string | undefined;
+let siteName: string | undefined;
+let domain = '';
+
+if (isExternal) {
+  const ogpData = await fetchOGP(url);
+  title = ogpData.title || url;
+  description = ogpData.description;
+  image = ogpData.image;
+  siteName = ogpData.siteName;
+
+  try {
+    const urlObj = new URL(url);
+    domain = urlObj.hostname;
+  } catch (e) {
+    domain = url;
+  }
+} else {
+  // 内部リンクの場合
+  domain = 'ponyoxa.com';
+  title = url;
+}
+---
+
+<a href={url} class="link-card" class:list={['link-card', { 'link-card-internal': !isExternal }]} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
+  <div class="link-card-content">
+    <div class="link-card-text">
+      <div class="link-card-title">{title || url}</div>
+      {description && <div class="link-card-description">{description}</div>}
+      <div class="link-card-url">
+        <span class="link-card-domain">{siteName || domain}</span>
+      </div>
+    </div>
+    {image && (
+      <div class="link-card-image">
+        <img src={image} alt={title || 'Link preview'} loading="lazy" />
+      </div>
+    )}
+  </div>
+</a>
+
+<style>
+  .link-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    margin: 1.5rem 0;
+    background-color: #fff;
+  }
+
+  .link-card:hover {
+    border-color: #999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .link-card-content {
+    display: flex;
+    align-items: stretch;
+    min-height: 120px;
+  }
+
+  .link-card-text {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .link-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    color: #333;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .link-card-description {
+    font-size: 0.875rem;
+    color: #666;
+    line-height: 1.5;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 0.5rem;
+  }
+
+  .link-card-url {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .link-card-domain {
+    font-size: 0.75rem;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .link-card-image {
+    width: 160px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .link-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  @media (max-width: 640px) {
+    .link-card-content {
+      flex-direction: column;
+    }
+
+    .link-card-image {
+      width: 100%;
+      height: 200px;
+      order: -1;
+    }
+
+    .link-card-text {
+      padding: 12px;
+    }
+
+    .link-card-title {
+      font-size: 0.95rem;
+    }
+
+    .link-card-description {
+      font-size: 0.8rem;
+    }
+  }
+</style>

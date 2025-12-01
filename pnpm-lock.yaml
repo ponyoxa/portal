@@ -27,12 +27,18 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.932.0
         version: 3.932.0
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       satori:
         specifier: ^0.18.3
         version: 0.18.3
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
 
 packages:
 
