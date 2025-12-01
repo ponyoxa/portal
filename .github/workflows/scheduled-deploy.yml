@@ -4,6 +4,7 @@ on:
   schedule:
     # 毎日 18:00 UTC = 日本時間 03:00
     - cron: "0 18 * * *"
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -17,13 +18,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "pnpm"
 
       - name: Setup pnpm
         # バージョンはプロジェクトに合わせる
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
