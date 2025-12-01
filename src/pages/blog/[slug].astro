@@ -4,7 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButtons from '../../components/ShareButtons.astro';
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
+  const blogEntries = await getCollection('blog', ({ data }) => {
+    return data.createdAt <= new Date();
+  });
   return blogEntries.map(entry => ({
     params: { slug: entry.slug },
     props: { entry },
