@@ -20,10 +20,7 @@ jobs:
           node-version: "22"
 
       - name: Setup pnpm
-        # バージョンはプロジェクトに合わせる
         uses: pnpm/action-setup@v4
-        with:
-          version: 10.14
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
