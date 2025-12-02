@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  TZ: Asia/Tokyo
+  TZ: "Asia/Tokyo"
 
 jobs:
   deploy:
