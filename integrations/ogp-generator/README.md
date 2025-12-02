@@ -30,7 +30,6 @@ R2_ACCESS_KEY_ID=your-access-key-id
 R2_SECRET_ACCESS_KEY=your-secret-access-key
 R2_BUCKET_NAME=ogp-images
 R2_PUBLIC_URL=https://ogp.ponyoxa.com
-PUBLIC_R2_URL=https://ogp.ponyoxa.com
 ```
 
 #### Cloudflareビルド環境
@@ -42,7 +41,6 @@ Cloudflareダッシュボード > Workers & Pages > 設定 > 環境変数:
 - `R2_SECRET_ACCESS_KEY`
 - `R2_BUCKET_NAME`
 - `R2_PUBLIC_URL`
-- `PUBLIC_R2_URL`
 
 ## 使い方
 
@@ -53,6 +51,7 @@ pnpm run build
 ```
 
 ビルド時に自動的に:
+
 1. R2から既存のマニフェストを取得
 2. 各ページのコンテンツハッシュを計算
 3. 変更されたページのみOGP画像を生成
@@ -83,7 +82,7 @@ pnpm run build
 レイアウト変更後は `differ.js` の `layoutVersion` をインクリメント:
 
 ```javascript
-this.layoutVersion = 'v2'; // v1 → v2
+this.layoutVersion = "v2"; // v1 → v2
 ```
 
 ### 全件再生成
@@ -95,11 +94,13 @@ FORCE_REGENERATE_OGP=true pnpm run build
 ```
 
 または、R2のマニフェストファイルを削除:
+
 - `ogp-manifest.json` を削除
 
 ## フォントについて
 
 このIntegrationは日本語対応フォント（IPAゴシック）をバンドルしています。
+
 - `fonts/NotoSansJP-Regular.ttf` (実際はIPAゴシック)
 - ライセンス: IPA Font License (fonts/LICENSE.txt)
 - Cloudflare Workersビルド環境でも動作します
@@ -118,7 +119,7 @@ FORCE_REGENERATE_OGP=true pnpm run build
 ### 画像が表示されない
 
 1. R2バケットがパブリックアクセス可能か確認
-2. `PUBLIC_R2_URL` が正しく設定されているか確認
+2. `R2_PUBLIC_URL` が正しく設定されているか確認
 3. ブラウザの開発者ツールでOGP URLを確認
 
 ## 仕組み

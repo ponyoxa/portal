@@ -3,6 +3,8 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - pagefind
+  - ponyoxa
   - Timez
 ignoreWords:
   - GQuuuuuuX

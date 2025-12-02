@@ -12,7 +12,7 @@ const { title = 'ponyoxa portal', description = 'ponyoxaのポータルサイト
 
 // R2のOGP画像URLを生成
 function getOGPImageUrl(pathname: string): string {
-  const r2PublicUrl = import.meta.env.PUBLIC_R2_URL || 'https://pub-xxx.r2.dev';
+  const r2PublicUrl = import.meta.env.R2_PUBLIC_URL || 'https://pub-xxx.r2.dev';
   const normalized = pathname
     .replace(/^\//, '')
     .replace(/\/$/, '')
