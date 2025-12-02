@@ -5,7 +5,9 @@ import ShareButtons from '../../components/ShareButtons.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) => {
-    return data.createdAt <= new Date();
+    const now = new Date();
+    const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+    return data.createdAt <= jst;
   });
   return blogEntries.map(entry => ({
     params: { slug: entry.slug },
