@@ -6,20 +6,23 @@ on:
     - cron: "0 18 * * *"
   workflow_dispatch:
 
+env:
+  TZ: Asia/Tokyo
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup timezone to Asia/Tokyo
-        run: |
-          sudo apt-get -qq -y update
-          sudo apt-get -qq -y --no-install-recommends install rsync curl ca-certificates tzdata
-          sudo cp --remove-destination -p /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-          sudo apt-get -qq -y remove tzdata
-          sudo apt-get clean
-          sudo rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
-        shell: bash
+      # - name: Setup timezone to Asia/Tokyo
+      #   run: |
+      #     sudo apt-get -qq -y update
+      #     sudo apt-get -qq -y --no-install-recommends install rsync curl ca-certificates tzdata
+      #     sudo cp --remove-destination -p /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+      #     sudo apt-get -qq -y remove tzdata
+      #     sudo apt-get clean
+      #     sudo rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
+      #   shell: bash
 
       - name: Checkout
         uses: actions/checkout@v4
