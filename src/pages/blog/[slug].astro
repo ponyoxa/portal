@@ -20,11 +20,27 @@ const { Content } = await entry.render();
 const title = entry.data.title || 'ponyoxa portal';
 const description = entry.data.description || '';
 const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://ponyoxa.com').toString();
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return date.toISOString().split('T')[0];
+}
 ---
 
 <BaseLayout title={title} description={description}>
   <article>
     <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+    <div class="post-meta">
+      <time datetime={entry.data.createdAt.toISOString()}>
+        作成日: {formatDate(entry.data.createdAt)}
+      </time>
+      {entry.data.updatedAt &&
+       entry.data.updatedAt.getTime() !== entry.data.createdAt.getTime() && (
+        <time datetime={entry.data.updatedAt.toISOString()}>
+          更新日: {formatDate(entry.data.updatedAt)}
+        </time>
+      )}
+    </div>
     {entry.data.tags && entry.data.tags.length > 0 && (
       <div class="post-tags">
         {entry.data.tags.map(tag => (
@@ -41,6 +57,19 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://ponyoxa.co
 </BaseLayout>
 
 <style>
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .post-meta time {
+    display: block;
+  }
+
   .post-tags {
     display: flex;
     flex-wrap: wrap;

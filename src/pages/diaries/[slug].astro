@@ -14,14 +14,47 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const title = entry.data.title || entry.slug;
 const description = entry.data.description || '';
+
+function formatDate(date: Date | undefined): string {
+  if (!date) return '';
+  return date.toISOString().split('T')[0];
+}
 ---
 
 <BaseLayout title={title} description={description}>
   <article>
     <h1 data-pagefind-meta="title">{entry.data.title || entry.slug}</h1>
+    {entry.data.createdAt && (
+      <div class="post-meta">
+        <time datetime={entry.data.createdAt.toISOString()}>
+          作成日: {formatDate(entry.data.createdAt)}
+        </time>
+        {entry.data.updatedAt &&
+         entry.data.updatedAt.getTime() !== entry.data.createdAt.getTime() && (
+          <time datetime={entry.data.updatedAt.toISOString()}>
+            更新日: {formatDate(entry.data.updatedAt)}
+          </time>
+        )}
+      </div>
+    )}
     <Content />
     <nav style="margin-top: 3rem; text-align: center;">
       <a class="nav-link" href="/diaries">← 一覧</a>
     </nav>
   </article>
 </BaseLayout>
+
+<style>
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0 2rem 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .post-meta time {
+    display: block;
+  }
+</style>
