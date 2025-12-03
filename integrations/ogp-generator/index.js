@@ -37,8 +37,7 @@ async function getContentFromFiles() {
 
     // .md と .mdx だけを対象にする
     const targetFiles = blogFiles.filter((file) => {
-      const ext = extname(file); // ".md" とか ".mdx"
-      return ext === ".md" || ext === ".mdx";
+      return file.endsWith("md") || file.endsWith("mdx");
     });
 
     for (const file of targetFiles) {
@@ -56,6 +55,7 @@ async function getContentFromFiles() {
       });
     }
   } catch (e) {
+    console.log(e);
     console.log("⚠️  ブログディレクトリが見つかりません");
   }
 
