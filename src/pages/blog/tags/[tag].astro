@@ -1,10 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { nowJST, formatDateJST, compareDatesJST, toJST } from '../../../utils/date';
 
 export async function getStaticPaths() {
   const blogs = await getCollection('blog', ({ data }) => {
-    return data.createdAt <= new Date();
+    const now = nowJST();
+    const createdAt = toJST(data.createdAt);
+    return createdAt <= now;
   });
 
   // すべてのタグを収集
@@ -18,9 +21,7 @@ export async function getStaticPaths() {
     const taggedPosts = blogs
       .filter(post => post.data.tags?.includes(tag))
       .sort((a, b) => {
-        const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
-        const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
-        return dateB - dateA;
+        return -compareDatesJST(a.data.createdAt, b.data.createdAt);
       });
 
     return {
@@ -31,11 +32,6 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props;
-
-function formatDate(date: Date | undefined): string {
-  if (!date) return '';
-  return date.toISOString().split('T')[0];
-}
 ---
 
 <BaseLayout title={`タグ: ${tag} - Blog - ponyoxa portal`} pagefindIgnore={true}>
@@ -49,7 +45,7 @@ function formatDate(date: Date | undefined): string {
       <div class="blog-list">
         {posts.map(post => (
           <div class="blog-card">
-            <small>{formatDate(post.data.createdAt)}</small>
+            <small>{formatDateJST(post.data.createdAt)}</small>
             <a href={`/blog/${post.slug}`}>
               <p>{post.data.title ?? "(no title)"}</p>
             </a>

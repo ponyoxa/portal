@@ -2,24 +2,18 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Pagination from '../../components/Pagination.astro';
+import { formatDateJST, compareDatesJST } from '../../utils/date';
 
 const PAGE_SIZE = 20;
 
 const diaries = await getCollection('diaries');
 const sortedDiaries = diaries.sort((a, b) => {
-  const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0;
-  const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0;
-  return dateB - dateA;
+  return -compareDatesJST(a.data.createdAt, b.data.createdAt);
 });
 
 const totalPages = Math.ceil(sortedDiaries.length / PAGE_SIZE);
 const currentPage = 1;
 const paginatedDiaries = sortedDiaries.slice(0, PAGE_SIZE);
-
-function formatDate(date: Date | undefined): string {
-  if (!date) return '';
-  return date.toISOString().split('T')[0];
-}
 ---
 
 <BaseLayout title="Diaries - ponyoxa portal" pagefindIgnore={true}>
@@ -30,7 +24,7 @@ function formatDate(date: Date | undefined): string {
         <div class="article-list">
           {paginatedDiaries.map(post => (
             <div class="article-card">
-              <small>{formatDate(post.data.createdAt)}</small>
+              <small>{formatDateJST(post.data.createdAt)}</small>
               <a href={`/diaries/${post.slug}`}>
                 <p>{post.data.title ?? post.slug}</p>
               </a>

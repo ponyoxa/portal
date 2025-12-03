@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDateJST, toISOStringJST } from '../../utils/date';
 
 export async function getStaticPaths() {
   const diaryEntries = await getCollection('diaries');
@@ -14,11 +15,6 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const title = entry.data.title || entry.slug;
 const description = entry.data.description || '';
-
-function formatDate(date: Date | undefined): string {
-  if (!date) return '';
-  return date.toISOString().split('T')[0];
-}
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,13 +22,13 @@ function formatDate(date: Date | undefined): string {
     <h1 data-pagefind-meta="title">{entry.data.title || entry.slug}</h1>
     {entry.data.createdAt && (
       <div class="post-meta">
-        <time datetime={entry.data.createdAt.toISOString()}>
-          作成日: {formatDate(entry.data.createdAt)}
+        <time datetime={toISOStringJST(entry.data.createdAt)}>
+          作成日: {formatDateJST(entry.data.createdAt)}
         </time>
         {entry.data.updatedAt &&
          entry.data.updatedAt.getTime() !== entry.data.createdAt.getTime() && (
-          <time datetime={entry.data.updatedAt.toISOString()}>
-            更新日: {formatDate(entry.data.updatedAt)}
+          <time datetime={toISOStringJST(entry.data.updatedAt)}>
+            更新日: {formatDateJST(entry.data.updatedAt)}
           </time>
         )}
       </div>

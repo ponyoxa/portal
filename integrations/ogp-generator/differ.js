@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { DateTime } from 'luxon';
 
 /**
  * OGP画像の差分検出
@@ -59,7 +60,7 @@ export class OGPDiffer {
     this.manifest[pathname] = {
       hash,
       url,
-      updatedAt: new Date().toISOString(),
+      updatedAt: DateTime.now().setZone('Asia/Tokyo').toISO(),
     };
   }
 

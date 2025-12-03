@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { nowJST, toJST } from '../../../utils/date';
 
 const blogs = await getCollection('blog', ({ data }) => {
-  return data.createdAt <= new Date();
+  const now = nowJST();
+  const createdAt = toJST(data.createdAt);
+  return createdAt <= now;
 });
 
 // すべてのタグを収集してカウント
