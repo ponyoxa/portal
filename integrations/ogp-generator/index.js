@@ -1,8 +1,8 @@
-import { OGPGenerator } from './generator.js';
-import { R2Uploader } from './uploader.js';
-import { OGPDiffer } from './differ.js';
-import { writeFile, readFile, readdir } from 'fs/promises';
-import { join } from 'path';
+import { OGPGenerator } from "./generator.js";
+import { R2Uploader } from "./uploader.js";
+import { OGPDiffer } from "./differ.js";
+import { writeFile, readFile, readdir } from "fs/promises";
+import { join } from "path";
 
 /**
  * フロントマターをパース
@@ -12,12 +12,12 @@ function parseFrontmatter(content) {
   if (!match) return {};
 
   const frontmatter = {};
-  const lines = match[1].split('\n');
+  const lines = match[1].split("\n");
 
   for (const line of lines) {
-    const [key, ...valueParts] = line.split(':');
+    const [key, ...valueParts] = line.split(":");
     if (key && valueParts.length > 0) {
-      frontmatter[key.trim()] = valueParts.join(':').trim();
+      frontmatter[key.trim()] = valueParts.join(":").trim();
     }
   }
 
@@ -32,62 +32,71 @@ async function getContentFromFiles() {
 
   // ブログ記事
   try {
-    const blogDir = 'src/content/blog';
+    const blogDir = "src/content/blog";
     const blogFiles = await readdir(blogDir);
 
-    for (const file of blogFiles.filter(f => f.endsWith('.md'))) {
-      const content = await readFile(join(blogDir, file), 'utf-8');
+    // .md と .mdx だけを対象にする
+    const targetFiles = blogFiles.filter((file) => {
+      const ext = extname(file); // ".md" とか ".mdx"
+      return ext === ".md" || ext === ".mdx";
+    });
+
+    for (const file of targetFiles) {
+      const filePath = join(blogDir, file);
+      const content = await readFile(filePath, "utf-8");
       const frontmatter = parseFrontmatter(content);
-      const slug = file.replace('.md', '');
+
+      // 拡張子を気にせずファイル名だけから slug を作る
+      const slug = basename(file, extname(file)); // "post-1.md" → "post-1", "post-2.mdx" → "post-2"
 
       allContent.push({
         pathname: `/blog/${slug}/`,
         title: frontmatter.title || slug,
-        description: frontmatter.description || '',
+        description: frontmatter.description || "",
       });
     }
   } catch (e) {
-    console.log('⚠️  ブログディレクトリが見つかりません');
+    console.log("⚠️  ブログディレクトリが見つかりません");
   }
 
   // 日記
   try {
-    const diaryDir = 'src/content/diaries';
+    const diaryDir = "src/content/diaries";
     const diaryFiles = await readdir(diaryDir);
 
-    for (const file of diaryFiles.filter(f => f.endsWith('.md'))) {
-      const content = await readFile(join(diaryDir, file), 'utf-8');
+    for (const file of diaryFiles.filter((f) => f.endsWith(".md"))) {
+      const content = await readFile(join(diaryDir, file), "utf-8");
       const frontmatter = parseFrontmatter(content);
-      const slug = file.replace('.md', '');
+      const slug = file.replace(".md", "");
 
       allContent.push({
         pathname: `/diaries/${slug}/`,
         title: frontmatter.title || slug,
-        description: frontmatter.description || '',
+        description: frontmatter.description || "",
       });
     }
   } catch (e) {
-    console.log('⚠️  日記ディレクトリが見つかりません');
+    console.log("⚠️  日記ディレクトリが見つかりません");
   }
 
   // Rootページ
   try {
-    const rootDir = 'src/content/root';
+    const rootDir = "src/content/root";
     const rootFiles = await readdir(rootDir);
 
-    for (const file of rootFiles.filter(f => f.endsWith('.md'))) {
-      const content = await readFile(join(rootDir, file), 'utf-8');
+    for (const file of rootFiles.filter((f) => f.endsWith(".md"))) {
+      const content = await readFile(join(rootDir, file), "utf-8");
       const frontmatter = parseFrontmatter(content);
-      const slug = file.replace('.md', '');
+      const slug = file.replace(".md", "");
 
       allContent.push({
-        pathname: slug === 'index' ? '/' : `/${slug}/`,
-        title: frontmatter.title || 'ponyoxa portal',
-        description: frontmatter.description || '',
+        pathname: slug === "index" ? "/" : `/${slug}/`,
+        title: frontmatter.title || "ponyoxa portal",
+        description: frontmatter.description || "",
       });
     }
   } catch (e) {
-    console.log('⚠️  Rootディレクトリが見つかりません');
+    console.log("⚠️  Rootディレクトリが見つかりません");
   }
 
   return allContent;
@@ -98,14 +107,16 @@ async function getContentFromFiles() {
  */
 export default function ogpGeneratorIntegration() {
   return {
-    name: 'ogp-generator',
+    name: "ogp-generator",
     hooks: {
-      'astro:build:done': async ({ dir, pages }) => {
-        console.log('\n🖼️  OGP画像生成を開始...\n');
+      "astro:build:done": async ({ dir, pages }) => {
+        console.log("\n🖼️  OGP画像生成を開始...\n");
 
         // 環境変数チェック
         if (!process.env.R2_ACCOUNT_ID || !process.env.R2_ACCESS_KEY_ID) {
-          console.log('⚠️  R2環境変数が設定されていないため、OGP画像生成をスキップします');
+          console.log(
+            "⚠️  R2環境変数が設定されていないため、OGP画像生成をスキップします"
+          );
           return;
         }
 
@@ -114,7 +125,7 @@ export default function ogpGeneratorIntegration() {
           const generator = new OGPGenerator();
 
           // 1. R2から既存のマニフェストを取得
-          console.log('📥 マニフェストを取得中...');
+          console.log("📥 マニフェストを取得中...");
           const manifest = await uploader.getManifest();
           const differ = new OGPDiffer(manifest);
 
@@ -149,17 +160,19 @@ export default function ogpGeneratorIntegration() {
 
           // 4. マニフェストをR2に保存
           if (generated > 0) {
-            console.log('\n💾 マニフェストを保存中...');
+            console.log("\n💾 マニフェストを保存中...");
             await uploader.saveManifest(differ.getManifest());
           }
 
           // 5. ビルド成果物にURLマップを出力
-          const urlMapPath = join(dir.pathname, 'ogp-urls.json');
+          const urlMapPath = join(dir.pathname, "ogp-urls.json");
           await writeFile(urlMapPath, JSON.stringify(urlMap, null, 2));
 
-          console.log(`\n✅ OGP画像生成完了: ${generated}件生成, ${skipped}件スキップ\n`);
+          console.log(
+            `\n✅ OGP画像生成完了: ${generated}件生成, ${skipped}件スキップ\n`
+          );
         } catch (error) {
-          console.error('❌ OGP画像生成エラー:', error);
+          console.error("❌ OGP画像生成エラー:", error);
           // ビルドは失敗させない
         }
       },
