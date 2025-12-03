@@ -2,7 +2,7 @@ import { OGPGenerator } from "./generator.js";
 import { R2Uploader } from "./uploader.js";
 import { OGPDiffer } from "./differ.js";
 import { writeFile, readFile, readdir } from "fs/promises";
-import { join, basename } from "path";
+import { join, basename, extname } from "path";
 
 /**
  * フロントマターをパース
