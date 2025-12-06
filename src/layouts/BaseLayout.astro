@@ -61,7 +61,7 @@ const ogpImageUrl = image?.startsWith('http')
 </head>
 <body>
   <Header />
-  <div class="markdown-body font-class" data-pagefind-body={pagefindIgnore ? undefined : true} data-pagefind-ignore={pagefindIgnore ? true : undefined}>
+  <div class="container markdown-body font-class" data-pagefind-body={pagefindIgnore ? undefined : true} data-pagefind-ignore={pagefindIgnore ? true : undefined}>
     <slot />
   </div>
   <footer><small>&copy; 2025 ponyoxa</small></footer>
@@ -102,13 +102,17 @@ const ogpImageUrl = image?.startsWith('http')
     flex-direction: column;
   }
 
-  .markdown-body {
-    flex: 1;
+  /* 共通コンテナスタイル */
+  .container {
     max-width: 980px;
     margin: 0 auto;
     padding: 0 16px;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .markdown-body {
+    flex: 1;
   }
 
   /* マークダウン内の画像 */
@@ -269,7 +273,7 @@ const ogpImageUrl = image?.startsWith('http')
 
   /* レスポンシブ対応 */
   @media (max-width: 768px) {
-    .markdown-body {
+    .container {
       padding: 0 12px;
     }
 

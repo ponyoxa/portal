@@ -3,7 +3,7 @@ import Search from './Search.astro';
 ---
 
 <header class="site-header">
-  <div class="header-container">
+  <div class="container header-container">
     <h1 class="site-title">
       <a href="/">
         <img src="/icon.png" alt="ponyoxa icon" class="site-icon" />
@@ -39,9 +39,8 @@ import Search from './Search.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 1rem 16px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .site-title {
@@ -101,7 +100,8 @@ import Search from './Search.astro';
 
   @media (max-width: 768px) {
     .header-container {
-      padding: 0.875rem 12px;
+      padding-top: 0.875rem;
+      padding-bottom: 0.875rem;
     }
 
     .site-title {
@@ -121,7 +121,8 @@ import Search from './Search.astro';
 
   @media (max-width: 480px) {
     .header-container {
-      padding: 0.75rem 12px;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
       flex-wrap: wrap;
       gap: 0.75rem;
     }
