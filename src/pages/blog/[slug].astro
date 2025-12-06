@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ShareButtons from '../../components/ShareButtons.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 import { nowJST, formatDateJST, toISOStringJST, toJST } from '../../utils/date';
 
 export async function getStaticPaths() {
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 const title = entry.data.title || 'ponyoxa portal';
 const description = entry.data.description || '';
 const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://ponyoxa.com').toString();
@@ -44,6 +45,7 @@ const currentUrl = new URL(Astro.url.pathname, Astro.site || 'https://ponyoxa.co
         ))}
       </div>
     )}
+    <TableOfContents headings={headings} />
     <Content />
     <ShareButtons title={title} url={currentUrl} />
     <nav style="margin-top: 2rem; text-align: center;">

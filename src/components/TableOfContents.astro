@@ -1,0 +1,107 @@
+---
+export interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// h2 と h3 のみを対象にする（h1 はタイトルなので除外）
+const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <details class="toc">
+    <summary>目次</summary>
+    <nav>
+      <ul>
+        {filteredHeadings.map(heading => (
+          <li class={`toc-level-${heading.depth}`}>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </details>
+)}
+
+<style>
+  .toc {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+  }
+
+  .toc summary {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.5rem;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .toc summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc summary::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+    font-size: 0.8rem;
+  }
+
+  .toc[open] summary::before {
+    transform: rotate(90deg);
+  }
+
+  .toc nav {
+    margin-top: 1rem;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    margin: 0.5rem 0;
+  }
+
+  .toc a {
+    text-decoration: none;
+    color: #495057;
+    transition: color 0.2s;
+    display: block;
+    padding: 0.25rem 0;
+  }
+
+  .toc a:hover {
+    color: #007bff;
+  }
+
+  .toc-level-2 {
+    padding-left: 0;
+  }
+
+  .toc-level-3 {
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .toc-level-3 a {
+    color: #6c757d;
+  }
+</style>

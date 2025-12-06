@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
 import { formatDateJST, toISOStringJST } from '../../utils/date';
 
 export async function getStaticPaths() {
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await entry.render();
 const title = entry.data.title || entry.slug;
 const description = entry.data.description || '';
 ---
@@ -33,6 +34,7 @@ const description = entry.data.description || '';
         )}
       </div>
     )}
+    <TableOfContents headings={headings} />
     <Content />
     <nav style="margin-top: 3rem; text-align: center;">
       <a class="nav-link" href="/diaries">← 一覧</a>
