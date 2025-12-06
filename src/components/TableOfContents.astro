@@ -32,18 +32,18 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 
 <style>
   .toc {
-    margin: 2rem 0;
-    padding: 1rem;
+    margin: 1.5rem 0;
+    padding: 0.75rem;
     background-color: #f8f9fa;
     border: 1px solid #e9ecef;
-    border-radius: 8px;
+    border-radius: 6px;
   }
 
   .toc summary {
     cursor: pointer;
     font-weight: bold;
-    font-size: 1.1rem;
-    padding: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.25rem;
     user-select: none;
     list-style: none;
     display: flex;
@@ -57,9 +57,9 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   .toc summary::before {
     content: '▶';
     display: inline-block;
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
     transition: transform 0.2s;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   .toc[open] summary::before {
@@ -67,7 +67,7 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   }
 
   .toc nav {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
   .toc ul {
@@ -77,7 +77,7 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   }
 
   .toc li {
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
   }
 
   .toc a {
@@ -85,7 +85,8 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
     color: #495057;
     transition: color 0.2s;
     display: block;
-    padding: 0.25rem 0;
+    padding: 0.15rem 0;
+    font-size: 0.9rem;
   }
 
   .toc a:hover {
@@ -97,8 +98,8 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   }
 
   .toc-level-3 {
-    padding-left: 1.5rem;
-    font-size: 0.95rem;
+    padding-left: 1rem;
+    font-size: 0.85rem;
   }
 
   .toc-level-3 a {
