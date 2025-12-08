@@ -57,9 +57,9 @@ const ogpImageUrl = image?.startsWith('http')
   <meta name="twitter:image" content={ogpImageUrl} />
   <meta name="twitter:image:alt" content={title} />
 
-  <!-- Google tag (gtag.js) with Partytown -->
-  <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-WHKFPJ62YQ"></script>
-  <script type="text/partytown">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WHKFPJ62YQ"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());

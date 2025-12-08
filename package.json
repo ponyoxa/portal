@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.11",
-    "@astrojs/partytown": "^2.1.4",
     "@astrojs/rss": "^4.0.14",
     "astro": "^5.15.8",
     "github-markdown-css": "^5.8.1",
