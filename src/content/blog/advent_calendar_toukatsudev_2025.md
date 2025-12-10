@@ -8,7 +8,7 @@ tags: ["コミュニティ", "イベント"]
 
 この記事は、[東葛.dev Advent Calendar 2025](https://adventar.org/calendars/11653)の 12/10 の記事です。
 
-昨日は、[ナイトウさん](https://x.com/naitokosuke)の[hogehoge](fugafuga)でした。
+昨日は、[ナイトウさん](https://x.com/naitokosuke)でした。
 
 ---
 
